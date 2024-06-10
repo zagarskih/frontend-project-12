@@ -1,19 +1,31 @@
 import React, { useState } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { useNavigate } from 'react-router-dom';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
+import axios from 'axios';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 const Login = () => {
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const navigate = useNavigate();
+  console.log(localStorage.token)
 
-  const handleSubmit = ({ setSubmitting }) => {
-    setIsSubmitted(true);
-    setTimeout(() => {
+  const handleSubmit = async (values, { setSubmitting, setStatus }) => {
+    try {
+      setSubmitting(true);
+      const response = await axios.post('/api/v1/login', values);
+      const token = response.data.token;
+      localStorage.setItem('token', token);
+      navigate('/');
+    } catch (error) {
+      console.error('Ошибка при авторизации:', error);
+      setStatus({ error: 'Неверный логин или пароль' });
+    } finally {
       setSubmitting(false);
-    }, 400);
-  };
+      // setSubmitted(true);
+    }
+  }
 
   const validationSchema = yup.object({
     username: yup.string()
@@ -50,7 +62,7 @@ const Login = () => {
                           initialValues={initialValues}
                           validationSchema={validationSchema}
                           onSubmit={handleSubmit}>
-                            {({ isSubmitting, errors, touched }) => (
+                            {({ isSubmitting, errors, touched, status }) => (
                             <Form>
                               <h1 className="text-center mb-4">Войти</h1>
                               <div className="form-floating mb-3">
@@ -68,6 +80,8 @@ const Login = () => {
                                   className={`form-control ${errors.password && touched.password ? 'is-invalid' : ''}`}
                                   placeholder="Password" />
                                 <label htmlFor="password">Пароль</label>
+                                {status && status.error && <div className="alert alert-danger mt-2">{status.error}</div>}
+                                {/* {(errors.username || errors.password) && (<div className="alert alert-danger">Пожалуйста, введите логин и пароль</div>)} */}
                               </div>
                               <button type="submit" className="w-100 mb-3 btn btn-outline-primary" disabled={isSubmitting || Object.keys(errors).length > 0}>
                                 Войти
