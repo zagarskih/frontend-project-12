@@ -1,18 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import ErrorPage from './error-page.jsx';
-import Login from './routes/login/login.jsx';
-import RootPage from "./routes/root.jsx";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ErrorPage from "./error-page.jsx";
+import Login from "./routes/login/login.jsx";
+import ChatPage from "./routes/chat/chatPage.js";
 import ProtectedRoute from "./routes/protectRoute.jsx";
+import { Provider } from "react-redux";
+import store from "./store.js";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <ProtectedRoute><RootPage /></ProtectedRoute>,
+    element: (
+      <ProtectedRoute>
+        <ChatPage />
+      </ProtectedRoute>
+    ),
     errorElement: <ErrorPage />,
   },
   {
@@ -23,6 +26,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
