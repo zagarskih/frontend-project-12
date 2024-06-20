@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { act } from "react";
 
 export const fetchChatData = createAsyncThunk(
   "chat/fetchChannelsAndMessages",
@@ -42,6 +43,10 @@ const chatSlice = createSlice({
       const { message } = action.payload;
       state.messages.push(message);
     },
+    addChannel: (state, action) => {
+      const { channel } = action.payload;
+      state.channels.push(channel);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -61,6 +66,6 @@ const chatSlice = createSlice({
   },
 });
 
-export const { addMessage } = chatSlice.actions;
+export const { addMessage, addChannel } = chatSlice.actions;
 
 export default chatSlice.reducer;
