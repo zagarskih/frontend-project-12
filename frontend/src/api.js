@@ -31,3 +31,34 @@ export const addChannel = async (token, newChannel) => {
     throw error;
   }
 }
+
+export const deleteChannel = async (token, channelId) => {
+  try {
+    const response = await axios.delete(`/api/v1/channels/${channelId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Не удалось удалить канал", error);
+    throw error;
+  }
+}
+
+export const deleteMessagesByChannel = async (token, channelId, messages) => {
+  try {
+    const messagesIds = messages.filter((message) => message.channelId === channelId).map((message) => message.id);
+    for (const id of messagesIds) {
+      await axios.delete(`/api/v1/messages/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+      console.log(`Deleted message with id ${id}`);
+    }
+  } catch (error) {
+    console.error("Не удалось удалить сообщения", error);
+    throw error;
+  }
+}

@@ -4,7 +4,6 @@ import { addMessage } from "./chatSlice";
 import { sendMessage } from "../../api";
 
 const NewMessageForm = ({ activeChannel }) => {
-  const dispatch = useDispatch();
   const [newMessage, setNewMessage] = useState("");
 
   const handleInputChange = (e) => {

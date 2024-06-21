@@ -1,16 +1,29 @@
 import { Modal, Button } from "react-bootstrap";
 import React from "react";
+import { useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import { addChannel } from "../../api";
 
-const AddChannelModal = ({ show, handleClose }) => {
+const AddChannelModal = ({ show, handleClose, setActiveChannel }) => {
   const initialValues = {
     inputField: "",
   };
 
+  const channels = useSelector((state) => state.chat.channels);
+  const allChannelsNames = channels.map((channel) => channel.name);
+
   const validationSchema = yup.object({
-    inputField: yup.string().required("Обязательное поле"),
+    inputField: yup
+      .string()
+      .required("Обязательное поле")
+      .min(3, "Минимальная длина 3 символа")
+      .max(20, "Максимальная длина 20 символов")
+      .test(
+        "unique-name",
+        "Имя уже существует",
+        (value) => !allChannelsNames.includes(value)
+      ),
   });
 
   const handleSubmit = async (values, actions) => {
@@ -20,7 +33,8 @@ const AddChannelModal = ({ show, handleClose }) => {
     const newChannel = { name: values.inputField };
 
     try {
-      await addChannel(token, newChannel);
+      const createdChannel = await addChannel(token, newChannel);
+      setActiveChannel(createdChannel.id);
       actions.resetForm();
     } catch (error) {
       console.error("Ошибка при отправке сообщения:", error);

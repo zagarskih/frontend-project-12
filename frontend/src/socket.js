@@ -1,6 +1,6 @@
 import io from "socket.io-client";
 import store from "./store";
-import { addMessage, addChannel } from "./routes/chat/chatSlice";
+import { addMessage, addChannel, deleteChannel } from "./routes/chat/chatSlice";
 
 const { dispatch } = store;
 
@@ -18,6 +18,10 @@ export const initSocket = () => {
     socket.on("newChannel", (newChannel) => {
       console.log("Received new channel from socket:", newChannel);
       dispatch(addChannel({ channel: newChannel }));
+    });
+
+    socket.on('channelDeleted', (channelId) => {
+      dispatch(deleteChannel(channelId));
     });
   }
 };

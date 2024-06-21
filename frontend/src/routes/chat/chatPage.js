@@ -42,6 +42,7 @@ export default function ChatPage() {
           <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">
             <ChannelsList
               activeChannel={activeChannel}
+              setActiveChannel={setActiveChannel}
               onChannelClick={handleActiveChannel}
             />
           </div>
