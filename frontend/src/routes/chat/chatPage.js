@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import ChannelsList from "./channelsList";
-import ChatMessages from "./chatMessages";
+import ChannelsList from "./channels/ChannelsList";
+import ChatMessages from "./messages/ChatMessages";
 import { fetchChatData } from "./chatSlice";
-import Header from "./header";
+import Header from "./Header";
+import "./styles.css";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -35,7 +36,7 @@ export default function ChatPage() {
   }
 
   return (
-    <div>
+    <div className="d-flex flex-column h-100">
       <Header />
       <div className="container h-100 my-4 overflow-hidden rounded shadow">
         <div className="row h-100 bg-white flex-md-row">

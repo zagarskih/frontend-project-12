@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./error-page.jsx";
 import Login from "./routes/login/login.jsx";
-import ChatPage from "./routes/chat/chatPage.js";
+import ChatPage from "./routes/chat/ChatPage.js";
 import ProtectedRoute from "./routes/protectRoute.jsx";
 import { Provider } from "react-redux";
 import store from "./store.js";

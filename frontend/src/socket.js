@@ -1,6 +1,6 @@
 import io from "socket.io-client";
 import store from "./store";
-import { addMessage, addChannel, deleteChannel } from "./routes/chat/chatSlice";
+import { addMessage, addChannel, deleteChannel, editChannel } from "./routes/chat/chatSlice";
 
 const { dispatch } = store;
 
@@ -23,6 +23,10 @@ export const initSocket = () => {
     socket.on('channelDeleted', (channelId) => {
       dispatch(deleteChannel(channelId));
     });
+
+    socket.on('editCahnnel', (channelId, newName) => {
+      dispatch(editChannel(channelId, newName));
+    })
   }
 };
 

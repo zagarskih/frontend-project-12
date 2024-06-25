@@ -1,7 +1,6 @@
-// import { ErrorResponseImpl } from "@remix-run/router/dist/utils";
 import axios from "axios";
 
-export const sendMessage = async (token, newMessage) => {
+export const sendMessageApi = async (token, newMessage) => {
   try {
     console.log("Sending message:", newMessage);
     const response = await axios.post("/api/v1/messages", newMessage, {
@@ -17,7 +16,7 @@ export const sendMessage = async (token, newMessage) => {
   }
 };
 
-export const addChannel = async (token, newChannel) => {
+export const addChannelApi = async (token, newChannel) => {
   try {
     const response = await axios.post("/api/v1/channels", newChannel, {
       headers: {
@@ -32,7 +31,7 @@ export const addChannel = async (token, newChannel) => {
   }
 }
 
-export const deleteChannel = async (token, channelId) => {
+export const deleteChannelApi = async (token, channelId) => {
   try {
     const response = await axios.delete(`/api/v1/channels/${channelId}`, {
       headers: {
@@ -59,6 +58,21 @@ export const deleteMessagesByChannel = async (token, channelId, messages) => {
     }
   } catch (error) {
     console.error("Не удалось удалить сообщения", error);
+    throw error;
+  }
+}
+
+export const editChannelApi = async (token, newName, channelId) => {
+  const editedChannel = { name: newName };
+  try {
+    await axios.patch(`/api/v1/channels/${channelId}`, editedChannel, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    console.log(`Переименован канал ${channelId} ${newName}`)
+  } catch (error) {
+    console.error("Не удалось переименовать канал", error);
     throw error;
   }
 }
