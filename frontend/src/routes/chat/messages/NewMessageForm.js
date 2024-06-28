@@ -5,6 +5,7 @@ import { sendMessageApi } from "../../../api";
 
 const NewMessageForm = ({ activeChannel }) => {
   const [newMessage, setNewMessage] = useState("");
+  const [isSubmiting, setSubmitting] = useState(false);
 
   const handleInputChange = (e) => {
     setNewMessage(e.target.value);
@@ -25,11 +26,13 @@ const NewMessageForm = ({ activeChannel }) => {
       body: newMessage,
     };
     try {
-      // dispatch(addMessage({ message }));
+      setSubmitting(true);
       await sendMessageApi(token, message);
       setNewMessage("");
     } catch (error) {
       console.error("Ошибка при отправке сообщения:", error);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -49,7 +52,7 @@ const NewMessageForm = ({ activeChannel }) => {
             value={newMessage}
             onChange={handleInputChange}
           ></input>
-          <button type="submit" className="btn btn-group-vertical">
+          <button type="submit" disabled={isSubmiting} className="btn btn-group-vertical">
             Отправить
           </button>
         </div>

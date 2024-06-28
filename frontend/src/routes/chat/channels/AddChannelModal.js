@@ -26,22 +26,23 @@ const AddChannelModal = ({ show, handleClose, setActiveChannel }) => {
       ),
   });
 
-  const handleSubmit = async (values, actions) => {
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     console.log(values);
 
     const token = localStorage.getItem("token");
     const newChannel = { name: values.inputField };
 
     try {
+      setSubmitting(true);
       const createdChannel = await addChannelApi(token, newChannel);
       setActiveChannel(createdChannel.id);
-      actions.resetForm();
+      resetForm();
       handleClose();
     } catch (error) {
       console.error("Ошибка при отправке сообщения:", error);
+    } finally {
+      setSubmitting(false);
     }
-
-    actions.setSubmitting(false);
   };
 
   return (

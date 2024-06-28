@@ -1,5 +1,5 @@
 import { Modal, Button } from "react-bootstrap";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
@@ -32,22 +32,23 @@ const EditChannelModal = ({ show, handleClose, channelId }) => {
 
   const dispatch = useDispatch();
 
-  const handleSubmit = async (values, actions) => {
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     const newName = values.inputField;
     console.log(`Новое название`, newName);
 
     const token = localStorage.getItem("token");
 
     try {
+      setSubmitting(true);
       await editChannelApi(token, newName, channelId);
       dispatch(editChannel({ channelId, newName }));
-      actions.resetForm(); //?
+      resetForm(); //?
       handleClose();
     } catch (error) {
       console.error("Ошибка при отправке сообщения:", error);
+    } finally {
+      setSubmitting(false);
     }
-
-    actions.setSubmitting(false);
   };
 
   const inputRef = useRef(null);

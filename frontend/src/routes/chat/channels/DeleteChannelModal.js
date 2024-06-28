@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { deleteChannelApi, deleteMessagesByChannel } from "../../../api";
 import { deleteChannel } from "../chatSlice";
@@ -13,17 +13,22 @@ const DeleteChannelModal = ({
 }) => {
   const dispatch = useDispatch();
 
+  const [submitting, setSubmitting] = useState(false);
+
   const handleDelete = async () => {
     const token = localStorage.getItem("token");
     console.log(channelId);
 
     try {
+      setSubmitting(true);
       await deleteChannelApi(token, channelId);
       await deleteMessagesByChannel(token, channelId, messages);
       setActiveChannel("1");
       dispatch(deleteChannel({ channelId }));
     } catch (error) {
       console.error("Ошибка при удалении канала:", error);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -50,6 +55,7 @@ const DeleteChannelModal = ({
         <Button
           className="btn-danger"
           variant="primary"
+          disabled={submitting}
           onClick={combinedClickHandler}
         >
           Удалить
