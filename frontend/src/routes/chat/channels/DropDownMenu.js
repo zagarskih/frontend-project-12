@@ -1,8 +1,9 @@
-import React, { act, useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import DeleteChannelModal from "./DeleteChannelModal";
 import EditChannelModal from "./EditChannelModal";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
+import { createPopper } from "@popperjs/core";
 
 const DropDownMenu = ({
   showMenu,
@@ -16,7 +17,6 @@ const DropDownMenu = ({
   const messages = useSelector((state) => state.chat.messages);
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-
   const [channelToDelete, setChannelToDelete] = useState(null);
 
   const handleCloseDeleteModal = () => {
@@ -42,52 +42,63 @@ const DropDownMenu = ({
     setEditChannelId(null);
   };
 
+  const buttonRef = useRef(null);
+  const menuRef = useRef(null);
+
+  const handleButtonClick = (event) => {
+    event.stopPropagation();
+    if (openMenuChannelId) {
+      channel.id === openMenuChannelId
+        ? handleCloseMenu()
+        : handleShowMenu(channel.id);
+    } else {
+      handleShowMenu(channel.id);
+    }
+  };
+
+  useEffect(() => {
+    if (showMenu && openMenuChannelId === channel.id) {
+      createPopper(buttonRef.current, menuRef.current, {
+        placement: "bottom-start",
+      });
+    }
+  }, [showMenu, openMenuChannelId, channel.id]);
+
   return (
     <>
       <button
-        onClick={(event) => {
-          event.stopPropagation();
-          if (openMenuChannelId) {
-            channel.id === openMenuChannelId
-              ? handleCloseMenu()
-              : handleShowMenu(channel.id);
-          } else {
-            handleShowMenu(channel.id);
-          }
-        }}
+        ref={buttonRef}
+        onClick={handleButtonClick}
         type="button"
-        aria-expanded="false"
+        aria-expanded={showMenu && openMenuChannelId === channel.id}
         className={classNames(
           "flex-grow-0",
           "dropdown-toggle",
           "dropdown-toggle-split",
           "btn",
-          { "btn-secondary": channel.id === activeChannel }
+          { "btn-secondary": channel.id === activeChannel },
+          { "btn-outline-secondary": showMenu && openMenuChannelId === channel.id }
         )}
       >
         <span className="visually-hidden">Управление каналом</span>
       </button>
       <div
-        // ref={menuRef}
-        // x-placement="bottom-end"
-        // data-popper-reference-hidden="false"
-        // data-popper-escaped="false"
-        // data-popper-placement="botton-end"
+        ref={menuRef}
         className={classNames(
           "dropdown-menu",
           { show: showMenu && openMenuChannelId === channel.id },
-          { hidden: !showMenu || openMenuChannelId === null }
         )}
       >
         <a
           onClick={(event) => {
+            event.stopPropagation();
             event.preventDefault();
             handleShowDeleteModal(channel.id);
           }}
           data-rr-ui-dropdown-item
           role="button"
-          class="dropdown-item"
-          tab-index="0"
+          className="dropdown-item"
+          tabIndex="0"
           href="#"
         >
           Удалить
@@ -106,7 +117,7 @@ const DropDownMenu = ({
           }}
           data-rr-ui-dropdown-item
           role="button"
-          class="dropdown-item"
+          className="dropdown-item"
           tab-index="0"
           href="#"
         >

@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import classNames from "classnames";
 import AddChannelModal from "./AddChannelModal";
-import DeleteChannelModal from "./DeleteChannelModal";
-import EditChannelModal from "./EditChannelModal";
 import DropDownMenu from "./DropDownMenu";
 
 const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
