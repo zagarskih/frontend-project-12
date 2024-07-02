@@ -1,33 +1,28 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ErrorPage from "./error-page.jsx";
-import Login from "./routes/login/login.jsx";
-import ChatPage from "./routes/chat/ChatPage.js";
-import ProtectedRoute from "./routes/protectRoute.jsx";
-import { Provider } from "react-redux";
-import store from "./store.js";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import App from './App';
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <ProtectedRoute>
-        <ChatPage />
-      </ProtectedRoute>
-    ),
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-]);
+import initI18next from './initi18next';
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
-  </React.StrictMode>
-);
+const app = async () => {
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  await initI18next();
+
+  // const socket = initSocket(init18next);
+
+  // const socketApi = {
+  //   sendMsg: (message) => socket.timeout(3000).emitWithAck('newMessage', message),
+  //   addChannel: (channel) => socket.timeout(3000).emitWithAck('newChannel', channel),
+  //   deleteChannel: (channel) => socket.timeout(3000).emitWithAck('removeChannel', channel),
+  //   changeNameChannel: (channel) => socket.timeout(3000).emitWithAck('renameChannel', channel),
+  // };
+
+  root.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  );
+};
+
+app();
