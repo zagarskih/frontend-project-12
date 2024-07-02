@@ -6,7 +6,7 @@ import ChatPage from "./routes/chat/ChatPage.js";
 import ProtectedRoute from "./routes/protectRoute.jsx";
 import { Provider } from "react-redux";
 import store from "./store.js";
-import SignUp from "./routes/sign up/signup.jsx";
+import SignUp from "./routes/signUp/signup.jsx";
 
 const router = createBrowserRouter([
   {

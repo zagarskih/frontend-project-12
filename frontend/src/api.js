@@ -76,3 +76,25 @@ export const editChannelApi = async (token, newName, channelId) => {
     throw error;
   }
 }
+
+export const sighUpApi = async (username, password) => {
+  try {
+    const response = await axios.post('/api/v1/signup', { username: username, password: password });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Не удалось зарегистрировать пользователя", error);
+    throw error;
+  }
+}
+
+export const logInApi = async (username, password) => {
+  try {
+    const response = await axios.post("/api/v1/login", { username: username, password: password });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Не удалось войти", error);
+    throw error;
+  }
+}
