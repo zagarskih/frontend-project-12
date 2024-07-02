@@ -4,6 +4,7 @@ import EditChannelModal from "./EditChannelModal";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
 import { createPopper } from "@popperjs/core";
+import { useTranslation } from "react-i18next";
 
 const DropDownMenu = ({
   showMenu,
@@ -14,6 +15,7 @@ const DropDownMenu = ({
   setActiveChannel,
   channel,
 }) => {
+  const { t } = useTranslation();
   const messages = useSelector((state) => state.chat.messages);
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -77,17 +79,19 @@ const DropDownMenu = ({
           "dropdown-toggle-split",
           "btn",
           { "btn-secondary": channel.id === activeChannel },
-          { "btn-outline-secondary": showMenu && openMenuChannelId === channel.id }
+          {
+            "btn-outline-secondary":
+              showMenu && openMenuChannelId === channel.id,
+          }
         )}
       >
-        <span className="visually-hidden">Управление каналом</span>
+        <span className="visually-hidden">{t("interface.menuSpan")}</span>
       </button>
       <div
         ref={menuRef}
-        className={classNames(
-          "dropdown-menu",
-          { show: showMenu && openMenuChannelId === channel.id },
-        )}
+        className={classNames("dropdown-menu", {
+          show: showMenu && openMenuChannelId === channel.id,
+        })}
       >
         <a
           onClick={(event) => {
@@ -101,7 +105,7 @@ const DropDownMenu = ({
           tabIndex="0"
           href="#"
         >
-          Удалить
+          {t("interface.delete")}
         </a>
         <DeleteChannelModal
           show={showDeleteModal}
@@ -121,7 +125,7 @@ const DropDownMenu = ({
           tab-index="0"
           href="#"
         >
-          Переименовать
+          {t("interface.edit")}
         </a>
         <EditChannelModal
           show={showEditModal}

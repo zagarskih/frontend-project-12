@@ -1,34 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { logInApi } from "../../api";
+import Header from "../Header";
 import * as yup from "yup";
-import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 const Login = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const handleSubmit = async (values, { setSubmitting, setStatus }) => {
     try {
       setSubmitting(true);
-      const response = await axios.post("/api/v1/login", values);
-      const token = response.data.token;
+      const username = values.username;
+      const password = values.password;
+      const response = await logInApi(username, password);
+      const token = response.token;
       localStorage.setItem("token", token);
       navigate("/");
     } catch (error) {
       console.error("Ошибка при авторизации:", error);
-      setStatus({ error: "Неверный логин или пароль" });
+      setStatus({ error: "Неверные имя пользователя или пароль" });
     } finally {
       setSubmitting(false);
-      // setSubmitted(true);
     }
   };
 
   const validationSchema = yup.object({
-    username: yup.string().required("Заполните это поле"),
-    password: yup.string().required("Заполните это поле"),
+    username: yup.string().required(t("validation.notFilled")),
+    password: yup.string().required(t("validation.notFilled")),
   });
 
   const initialValues = {
@@ -41,13 +45,7 @@ const Login = () => {
       <div className="h-100">
         <div className="h-100" id="chat">
           <div className="d-flex flex-column h-100">
-            <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
-              <div className="container">
-                <a className="navbar-brand" href="/">
-                  Hexlet Chat
-                </a>
-              </div>
-            </nav>
+            <Header />
             <div className="container-fluid h-100">
               <div className="row justify-content-center align-content-center h-100">
                 <div className="col-12 col-md-8 col-xxl-6">
@@ -65,10 +63,14 @@ const Login = () => {
                           initialValues={initialValues}
                           validationSchema={validationSchema}
                           onSubmit={handleSubmit}
+                          validateOnChange={false}
+                          validateOnBlur={false}
                         >
                           {({ isSubmitting, errors, touched, status }) => (
                             <Form>
-                              <h1 className="text-center mb-4">Войти</h1>
+                              <h1 className="text-center mb-4">
+                                {t("interface.signIn")}
+                              </h1>
                               <div className="form-floating mb-3">
                                 <Field
                                   type="text"
@@ -79,8 +81,11 @@ const Login = () => {
                                       : ""
                                   }`}
                                   placeholder="Username"
+                                  autoFocus
                                 />
-                                <label htmlFor="username">Ваш ник</label>
+                                <label htmlFor="username">
+                                  {t("interface.nickname")}
+                                </label>
                               </div>
                               <div className="form-floating mb-4">
                                 <Field
@@ -93,7 +98,9 @@ const Login = () => {
                                   }`}
                                   placeholder="Password"
                                 />
-                                <label htmlFor="password">Пароль</label>
+                                <label htmlFor="password">
+                                  {t("interface.password")}
+                                </label>
                                 {status && status.error && (
                                   <div className="alert alert-danger mt-2">
                                     {status.error}
@@ -108,7 +115,7 @@ const Login = () => {
                                   isSubmitting || Object.keys(errors).length > 0
                                 }
                               >
-                                Войти
+                                {t("interface.signIn")}
                               </button>
                             </Form>
                           )}
@@ -117,8 +124,8 @@ const Login = () => {
                     </div>
                     <div className="card-footer p-4">
                       <div className="text-center">
-                        <span>Нет аккаунта? </span>
-                        <a href="/signup">Регистрация</a>
+                        <span>{t("interface.noAcc")} </span>
+                        <a href="/signup">{t("interface.signUp")}</a>
                       </div>
                     </div>
                   </div>

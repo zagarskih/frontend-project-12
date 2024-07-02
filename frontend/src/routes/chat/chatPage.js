@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ChannelsList from "./channels/ChannelsList";
 import ChatMessages from "./messages/ChatMessages";
 import { fetchChatData } from "./chatSlice";
-import Header from "./Header";
+import ChatHeader from "./HeaderChat";
 import "./styles.css";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -37,7 +37,7 @@ export default function ChatPage() {
 
   return (
     <div className="d-flex flex-column h-100">
-      <Header />
+      <ChatHeader />
       <div className="container h-100 my-4 overflow-hidden rounded shadow">
         <div className="row h-100 bg-white flex-md-row">
           <div className="col-4 col-md-2 border-end px-0 bg-light flex-column h-100 d-flex">

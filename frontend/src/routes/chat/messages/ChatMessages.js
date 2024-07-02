@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import NewMessageForm from "./NewMessageForm";
 import { addMessage } from "../chatSlice";
 import { initSocket, disconnectSocket } from "../../../socket";
+import { useTranslation } from "react-i18next";
 
 const СhatMessages = ({ activeChannel }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const messages = useSelector((state) => state.chat.messages);
   const channels = useSelector((state) => state.chat.channels);
@@ -47,7 +49,7 @@ const СhatMessages = ({ activeChannel }) => {
             <b># {activeChannelName}</b>
           </p>
           <span className="text-muted">
-            Сообщений: {activeChannelMessages.length}
+            {activeChannelMessages.length} {t("interface.messagesCount")}
           </span>
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5">

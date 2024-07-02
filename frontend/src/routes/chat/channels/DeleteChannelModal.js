@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { deleteChannelApi, deleteMessagesByChannel } from "../../../api";
 import { deleteChannel } from "../chatSlice";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 const DeleteChannelModal = ({
   show,
@@ -11,6 +12,7 @@ const DeleteChannelModal = ({
   channelId,
   messages,
 }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const [submitting, setSubmitting] = useState(false);
@@ -45,12 +47,12 @@ const DeleteChannelModal = ({
       aria-labelledby="contained-modal-title-vcenter"
     >
       <Modal.Header closeButton>
-        <Modal.Title>Удалить канал</Modal.Title>
+        <Modal.Title>{t("interface.deleteTitle")}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Уверены?</Modal.Body>
+      <Modal.Body>{t("interface.deleteBody")}</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
-          Отменить
+          {t("interface.cancel")}
         </Button>
         <Button
           className="btn-danger"
@@ -58,7 +60,7 @@ const DeleteChannelModal = ({
           disabled={submitting}
           onClick={combinedClickHandler}
         >
-          Удалить
+          {t("interface.delete")}
         </Button>
       </Modal.Footer>
     </Modal>

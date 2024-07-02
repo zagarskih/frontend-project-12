@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addMessage } from "../chatSlice";
 import { sendMessageApi } from "../../../api";
+import { useTranslation } from "react-i18next";
 
 const NewMessageForm = ({ activeChannel }) => {
+  const { t } = useTranslation();
   const [newMessage, setNewMessage] = useState("");
   const [isSubmiting, setSubmitting] = useState(false);
 
@@ -52,8 +54,12 @@ const NewMessageForm = ({ activeChannel }) => {
             value={newMessage}
             onChange={handleInputChange}
           ></input>
-          <button type="submit" disabled={isSubmiting} className="btn btn-group-vertical">
-            Отправить
+          <button
+            type="submit"
+            disabled={isSubmiting}
+            className="btn btn-group-vertical"
+          >
+            {t("interface.send")}
           </button>
         </div>
       </form>

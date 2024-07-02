@@ -4,8 +4,10 @@ import { useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import { addChannelApi } from "../../../api";
+import { useTranslation } from "react-i18next";
 
 const AddChannelModal = ({ show, handleClose, setActiveChannel }) => {
+  const { t } = useTranslation();
   const initialValues = {
     inputField: "",
   };
@@ -16,12 +18,12 @@ const AddChannelModal = ({ show, handleClose, setActiveChannel }) => {
   const validationSchema = yup.object({
     inputField: yup
       .string()
-      .required("Обязательное поле")
-      .min(3, "Допустимая длина от 3 до 20 символов")
-      .max(20, "Допустимая длина от 3 до 20 символов")
+      .required(t("validation.notFilled"))
+      .min(3, t("validation.wrongLength"))
+      .max(20, t("validation.wrongLength"))
       .test(
         "unique-name",
-        "Имя уже существует",
+        t("validation.notUnique"),
         (value) => !allChannelsNames.includes(value)
       ),
   });
@@ -54,7 +56,7 @@ const AddChannelModal = ({ show, handleClose, setActiveChannel }) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Добавить канал
+          {t("interface.addTitle")}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -90,7 +92,7 @@ const AddChannelModal = ({ show, handleClose, setActiveChannel }) => {
                   onClick={handleClose}
                   className="mt-3"
                 >
-                  Отменить
+                  {t("interface.cancel")}
                 </Button>
                 <Button
                   variant="primary"
@@ -98,7 +100,7 @@ const AddChannelModal = ({ show, handleClose, setActiveChannel }) => {
                   disabled={isSubmitting}
                   className="mt-3 ms-2"
                 >
-                  Добавить
+                  {t("interface.add")}
                 </Button>
               </div>
             </Form>

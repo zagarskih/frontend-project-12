@@ -5,8 +5,10 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import { editChannelApi } from "../../../api";
 import { editChannel } from "../chatSlice";
+import { useTranslation } from "react-i18next";
 
 const EditChannelModal = ({ show, handleClose, channelId }) => {
+  const { t } = useTranslation();
   const channels = useSelector((state) => state.chat.channels);
   const allChannelsNames = channels.map((channel) => channel.name);
 
@@ -20,12 +22,12 @@ const EditChannelModal = ({ show, handleClose, channelId }) => {
   const validationSchema = yup.object({
     inputField: yup
       .string()
-      .required("Обязательное поле")
-      .min(3, "Минимальная длина 3 символа")
-      .max(20, "Максимальная длина 20 символов")
+      .required(t("validation.notFilled"))
+      .min(3, t("validation.wrongLength"))
+      .max(20, t("validation.wrongLength"))
       .test(
         "unique-name",
-        "Имя уже существует",
+        t("validation.notUnique"),
         (value) => !allChannelsNames.includes(value)
       ),
   });
@@ -69,7 +71,7 @@ const EditChannelModal = ({ show, handleClose, channelId }) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Переименовать канал
+          {t("interface.editTitle")}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -106,7 +108,7 @@ const EditChannelModal = ({ show, handleClose, channelId }) => {
                   onClick={handleClose}
                   className="mt-3"
                 >
-                  Отменить
+                  {t("interface.cancel")}
                 </Button>
                 <Button
                   variant="primary"
@@ -114,7 +116,7 @@ const EditChannelModal = ({ show, handleClose, channelId }) => {
                   disabled={isSubmitting}
                   className="mt-3 ms-2"
                 >
-                  Добавить
+                  {t("interface.edit")}
                 </Button>
               </div>
             </Form>

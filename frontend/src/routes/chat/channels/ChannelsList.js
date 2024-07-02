@@ -3,8 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import classNames from "classnames";
 import AddChannelModal from "./AddChannelModal";
 import DropDownMenu from "./DropDownMenu";
+import { useTranslation } from "react-i18next";
 
 const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
+  const { t } = useTranslation();
+
   const channels = useSelector((state) => state.chat.channels);
 
   const [showAddModal, setShowAddModal] = useState(false);
@@ -46,11 +49,11 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
   return (
     <>
       <div className="d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4">
-        <b>Каналы</b>
+        <b>{t("interface.channelsHead")}</b>
         <button
           onClick={handleShowAddModal}
           type="button"
-          class="p-0 text-primary btn btn-group-vertical"
+          className="p-0 text-primary btn btn-group-vertical"
         >
           +
         </button>
