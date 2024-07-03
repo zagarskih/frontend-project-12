@@ -4,6 +4,7 @@ import { deleteChannelApi, deleteMessagesByChannel } from "../../../api";
 import { deleteChannel } from "../chatSlice";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { toast } from 'react-toastify';
 
 const DeleteChannelModal = ({
   show,
@@ -23,12 +24,14 @@ const DeleteChannelModal = ({
 
     try {
       setSubmitting(true);
-      await deleteChannelApi(token, channelId);
-      await deleteMessagesByChannel(token, channelId, messages);
+      await deleteChannelApi(token, channelId, t);
+      await deleteMessagesByChannel(token, channelId, messages, t);
+      toast.success(t('toast.deleteChannel'));
       setActiveChannel("1");
       dispatch(deleteChannel({ channelId }));
     } catch (error) {
-      console.error("Ошибка при удалении канала:", error);
+      console.error(t('errors.deleting'), error);
+      toast.error(t('networkError'));
     } finally {
       setSubmitting(false);
     }

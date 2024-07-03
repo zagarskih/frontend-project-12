@@ -5,6 +5,7 @@ import Header from "../Header";
 import * as yup from "yup";
 import { sighUpApi } from "../../api";
 import { useTranslation } from "react-i18next";
+import { toast } from 'react-toastify';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -18,15 +19,18 @@ const SignUp = () => {
       setSubmitting(true);
       const username = values.username;
       const password = values.password;
-      const response = await sighUpApi(username, password);
+      const response = await sighUpApi(username, password, t);
       const token = response.token;
       localStorage.setItem("token", token);
       navigate("/");
     } catch (error) {
       if (error.response.status === 409) {
-        setStatus({ error: "Такой пользователь уже существует" });
+        setStatus({ error: t('errors.notUnique') });
+      } else if (!error.isAxiosError) {
+        setStatus({ error: t('errors.signUp') });
+        toast.error(t('unknownError'));
       } else {
-        setStatus({ error: "Не удалось зарегистрировать нового пользователя" });
+        toast.error(t('networkError'));
       }
     } finally {
       setSubmitting(false);

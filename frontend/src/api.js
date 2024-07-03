@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const sendMessageApi = async (token, newMessage) => {
+export const sendMessageApi = async (token, newMessage, t) => {
   try {
     console.log("Sending message:", newMessage);
     const response = await axios.post("/api/v1/messages", newMessage, {
@@ -11,12 +11,12 @@ export const sendMessageApi = async (token, newMessage) => {
     console.log(response.data); // => { id: '1', body: 'new message', channelId: '1', username: 'admin' }
     return response.data;
   } catch (error) {
-    console.error("Не удалось отправить сообщение:", error);
+    console.error(t('errorsApi.sending'), error);
     throw error;
   }
 };
 
-export const addChannelApi = async (token, newChannel) => {
+export const addChannelApi = async (token, newChannel, t) => {
   try {
     const response = await axios.post("/api/v1/channels", newChannel, {
       headers: {
@@ -26,12 +26,12 @@ export const addChannelApi = async (token, newChannel) => {
     console.log(response.data); // => { id: '3', name: 'new channel', removable: true }
     return response.data;
   } catch (error) {
-    console.error("Не удалось добавить канал", error);
+    console.error(t('errorsApi.creatingChannel'), error);
     throw error;
   }
 }
 
-export const deleteChannelApi = async (token, channelId) => {
+export const deleteChannelApi = async (token, channelId, t) => {
   try {
     const response = await axios.delete(`/api/v1/channels/${channelId}`, {
       headers: {
@@ -40,12 +40,12 @@ export const deleteChannelApi = async (token, channelId) => {
     });
     return response.data;
   } catch (error) {
-    console.error("Не удалось удалить канал", error);
+    console.error(t('errorsApi.deleting'), error);
     throw error;
   }
 }
 
-export const deleteMessagesByChannel = async (token, channelId, messages) => {
+export const deleteMessagesByChannel = async (token, channelId, messages, t) => {
   try {
     const messagesIds = messages.filter((message) => message.channelId === channelId).map((message) => message.id);
     for (const id of messagesIds) {
@@ -57,12 +57,12 @@ export const deleteMessagesByChannel = async (token, channelId, messages) => {
       console.log(`Deleted message with id ${id}`);
     }
   } catch (error) {
-    console.error("Не удалось удалить сообщения", error);
+    console.error(t('errorsApi.deletingMessages'), error);
     throw error;
   }
 }
 
-export const editChannelApi = async (token, newName, channelId) => {
+export const editChannelApi = async (token, newName, channelId, t) => {
   const editedChannel = { name: newName };
   try {
     await axios.patch(`/api/v1/channels/${channelId}`, editedChannel, {
@@ -72,29 +72,29 @@ export const editChannelApi = async (token, newName, channelId) => {
     });
     console.log(`Переименован канал ${channelId} ${newName}`)
   } catch (error) {
-    console.error("Не удалось переименовать канал", error);
+    console.error(t('errorsApi.editing'), error);
     throw error;
   }
 }
 
-export const sighUpApi = async (username, password) => {
+export const sighUpApi = async (username, password, t) => {
   try {
     const response = await axios.post('/api/v1/signup', { username: username, password: password });
     console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Не удалось зарегистрировать пользователя", error);
+    console.error(t('errorsApi.signUp'), error);
     throw error;
   }
 }
 
-export const logInApi = async (username, password) => {
+export const logInApi = async (username, password, t) => {
   try {
     const response = await axios.post("/api/v1/login", { username: username, password: password });
     console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Не удалось войти", error);
+    console.error(t('errorsApi.signIn'), error);
     throw error;
   }
 }

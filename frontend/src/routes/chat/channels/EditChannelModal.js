@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { editChannelApi } from "../../../api";
 import { editChannel } from "../chatSlice";
 import { useTranslation } from "react-i18next";
+import { toast } from 'react-toastify';
 
 const EditChannelModal = ({ show, handleClose, channelId }) => {
   const { t } = useTranslation();
@@ -36,18 +37,18 @@ const EditChannelModal = ({ show, handleClose, channelId }) => {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     const newName = values.inputField;
-    console.log(`Новое название`, newName);
-
     const token = localStorage.getItem("token");
 
     try {
       setSubmitting(true);
-      await editChannelApi(token, newName, channelId);
+      await editChannelApi(token, newName, channelId, t);
       dispatch(editChannel({ channelId, newName }));
+      toast.success(t('toast.editChannel'));
       resetForm(); //?
       handleClose();
     } catch (error) {
-      console.error("Ошибка при отправке сообщения:", error);
+      console.error(t('errors.editing'), error);
+      toast.error(t('networkError'));
     } finally {
       setSubmitting(false);
     }

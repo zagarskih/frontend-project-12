@@ -7,6 +7,8 @@ import ProtectedRoute from "./routes/protectRoute.jsx";
 import { Provider } from "react-redux";
 import store from "./store.js";
 import SignUp from "./routes/signUp/signup.jsx";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +33,7 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <Provider store={store}>
+      <ToastContainer />
       <RouterProvider router={router} />
     </Provider>
   )

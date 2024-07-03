@@ -1,9 +1,11 @@
 import { useRouteError } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 export default function ErrorPage() {
+  const { t } = useTranslation();
   const error = useRouteError();
   console.error(error);
 
@@ -18,9 +20,10 @@ export default function ErrorPage() {
             <img src="/errorPage.webp" className="img-fluid" alt="Error" />
           </div>
           <div className="col-md-4">
-            <h1>Страница не найдена</h1>
+            <h1>{t("interface.notFound")}</h1>
             <p className="text-left">
-              Но вы можете перейти на <a href="/login">главную страницу</a>
+              {t("interface.errorPageBody")}{" "}
+              <a href="/login">{t("interface.errorPageLink")}</a>
             </p>
           </div>
         </div>

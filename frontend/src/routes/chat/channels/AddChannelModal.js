@@ -5,6 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import { addChannelApi } from "../../../api";
 import { useTranslation } from "react-i18next";
+import { toast } from 'react-toastify';
 
 const AddChannelModal = ({ show, handleClose, setActiveChannel }) => {
   const { t } = useTranslation();
@@ -36,12 +37,14 @@ const AddChannelModal = ({ show, handleClose, setActiveChannel }) => {
 
     try {
       setSubmitting(true);
-      const createdChannel = await addChannelApi(token, newChannel);
+      const createdChannel = await addChannelApi(token, newChannel, t);
+      toast.success(t('toast.addChannel'));
       setActiveChannel(createdChannel.id);
       resetForm();
       handleClose();
     } catch (error) {
-      console.error("Ошибка при отправке сообщения:", error);
+      console.error(t('errors.creatingChannel'), error);
+      toast.error(t('networkError'));
     } finally {
       setSubmitting(false);
     }

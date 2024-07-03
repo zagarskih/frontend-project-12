@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { addMessage } from "../chatSlice";
 import { sendMessageApi } from "../../../api";
 import { useTranslation } from "react-i18next";
+import { toast } from 'react-toastify';
 
 const NewMessageForm = ({ activeChannel }) => {
   const { t } = useTranslation();
@@ -29,10 +30,11 @@ const NewMessageForm = ({ activeChannel }) => {
     };
     try {
       setSubmitting(true);
-      await sendMessageApi(token, message);
+      await sendMessageApi(token, message, t);
       setNewMessage("");
     } catch (error) {
-      console.error("Ошибка при отправке сообщения:", error);
+      console.error(t('errors.sending'), error);
+      toast.error(t('networkError'));
     } finally {
       setSubmitting(false);
     }

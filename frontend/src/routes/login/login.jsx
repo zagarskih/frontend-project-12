@@ -5,6 +5,7 @@ import { logInApi } from "../../api";
 import Header from "../Header";
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
+import { toast } from 'react-toastify';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -18,13 +19,19 @@ const Login = () => {
       setSubmitting(true);
       const username = values.username;
       const password = values.password;
-      const response = await logInApi(username, password);
+      const response = await logInApi(username, password, t);
       const token = response.token;
       localStorage.setItem("token", token);
       navigate("/");
     } catch (error) {
-      console.error("Ошибка при авторизации:", error);
-      setStatus({ error: "Неверные имя пользователя или пароль" });
+      if (error.response.status === 401) {
+        setStatus({ error: t('errors.wrongLoginPassword') });
+      } else if (!error.isAxiosError) {
+        toast.error(t('unknownError'));
+        return;
+      } else {
+        toast.error(t('networkError'));
+      }
     } finally {
       setSubmitting(false);
     }

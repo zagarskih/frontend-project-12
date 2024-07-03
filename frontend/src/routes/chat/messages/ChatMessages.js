@@ -49,7 +49,7 @@ const СhatMessages = ({ activeChannel }) => {
             <b># {activeChannelName}</b>
           </p>
           <span className="text-muted">
-            {activeChannelMessages.length} {t("interface.messagesCount")}
+            {t("message", { count: activeChannelMessages.length })}
           </span>
         </div>
         <div id="messages-box" className="chat-messages overflow-auto px-5">
