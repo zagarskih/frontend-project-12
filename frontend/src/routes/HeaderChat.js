@@ -1,16 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { useTranslation } from "react-i18next";
+import AuthContext from "../tokenContext";
 
 const ChatHeader = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { logOut, user } = useContext(AuthContext);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    logOut();
     navigate("/login");
   };
 
@@ -20,13 +19,15 @@ const ChatHeader = () => {
         <a className="navbar-brand" href="/">
           Hexlet Chat
         </a>
-        <button
-          onClick={handleLogout}
-          type="button"
-          className="btn btn-primary"
-        >
-          {t("interface.logOut")}
-        </button>
+        {!!user && (
+          <button
+            onClick={handleLogout}
+            type="button"
+            className="btn btn-primary"
+          >
+            {t("interface.logOut")}
+          </button>
+        )}
       </div>
     </nav>
   );

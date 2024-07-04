@@ -3,10 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ChannelsList from "./channels/ChannelsList";
 import ChatMessages from "./messages/ChatMessages";
 import { fetchChatData } from "./chatSlice";
-import ChatHeader from "./HeaderChat";
-
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import ChatHeader from "../HeaderChat";
 
 export default function ChatPage() {
   const dispatch = useDispatch();
