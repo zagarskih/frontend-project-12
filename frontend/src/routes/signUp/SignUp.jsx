@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import Header from "../Header";
+import ChatHeader from "../HeaderChat";
 import * as yup from "yup";
 import { sighUpApi } from "../../api";
 import { useTranslation } from "react-i18next";
 import { toast } from 'react-toastify';
-
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import AuthContext from "../../tokenContext";
 
 const SignUp = () => {
   const { t } = useTranslation();
+  const { logIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (values, { setSubmitting, setStatus }) => {
@@ -20,6 +19,7 @@ const SignUp = () => {
       const username = values.username;
       const password = values.password;
       const response = await sighUpApi(username, password, t);
+      logIn(response);
       const token = response.token;
       localStorage.setItem("token", token);
       navigate("/");
@@ -63,7 +63,7 @@ const SignUp = () => {
       <div className="h-100">
         <div className="h-100" id="chat">
           <div className="d-flex flex-column h-100">
-            <Header />
+            <ChatHeader />
             <div className="container-fluid h-100">
               <div className="row justify-content-center align-content-center h-100">
                 <div className="col-12 col-md-8 col-xxl-6">
