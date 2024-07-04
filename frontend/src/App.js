@@ -4,41 +4,40 @@ import ErrorPage from "./error-page.jsx";
 import Login from "./routes/login/LogIn.jsx";
 import ChatPage from "./routes/chat/ChatPage.js";
 import ProtectedRoute from "./routes/protectRoute.jsx";
-import { Provider } from "react-redux";
+import { Provider as ReduxProvider } from "react-redux";
 import store from "./store.js";
 import SignUp from "./routes/signUp/signup.jsx";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 import AuthContext from "./tokenContext.jsx";
-import 'react-toastify/dist/ReactToastify.css';
+import { Provider, ErrorBoundary } from "@rollbar/react";
+import "react-toastify/dist/ReactToastify.css";
 
 const AuthProvider = ({ children }) => {
-  const currentUser = JSON.parse(localStorage.getItem('user'));
-  const [user, setUser] = useState(currentUser ? { username: currentUser.username } : null);
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+  const [user, setUser] = useState(
+    currentUser ? { username: currentUser.username } : null
+  );
 
   const logIn = (userData) => {
-    localStorage.setItem('user', JSON.stringify(userData));
+    localStorage.setItem("user", JSON.stringify(userData));
     setUser({ username: userData.username });
   };
 
   const logOut = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem('user');
+    localStorage.removeItem("user");
     setUser(null);
   };
 
-  // const getAuthHeader = () => {
-  //   const userData = JSON.parse(localStorage.getItem('user'));
-  //   return userData?.token ? { Authorization: `Bearer ${userData.token}` } : {};
-  // };
-
   return (
-    <AuthContext.Provider value={
-        {
-          logIn, logOut, user,
-        }
-    }
+    <AuthContext.Provider
+      value={{
+        logIn,
+        logOut,
+        user,
+      }}
     >
-      { children }
+      {children}
     </AuthContext.Provider>
   );
 };
@@ -60,18 +59,33 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <SignUp />,
-  }
+  },
 ]);
 
+// const TestError = () => {
+//   const a = null;
+//   return a.hello();
+// };
+
 const App = () => {
+  const rollbarConfig = {
+    accessToken: "3a0fbeb3dce14e78b4ff4ed823304ddb",
+    environment: "testenv",
+  };
+
   return (
-    <Provider store={store}>
-      <AuthProvider>
-        <ToastContainer />
-        <RouterProvider router={router} />
-      </AuthProvider>
+    <Provider config={rollbarConfig}>
+      <ErrorBoundary>
+        <ReduxProvider store={store}>
+          <AuthProvider>
+            <ToastContainer />
+            <RouterProvider router={router} />
+            {/* <TestError /> */}
+          </AuthProvider>
+        </ReduxProvider>
+      </ErrorBoundary>
     </Provider>
-  )
+  );
 };
 
 export default App;
