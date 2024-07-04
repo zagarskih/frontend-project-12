@@ -7,6 +7,7 @@ import { editChannelApi } from "../../../api";
 import { editChannel } from "../chatSlice";
 import { useTranslation } from "react-i18next";
 import { toast } from 'react-toastify';
+import filter from 'leo-profanity';
 
 const EditChannelModal = ({ show, handleClose, channelId }) => {
   const { t } = useTranslation();
@@ -36,7 +37,7 @@ const EditChannelModal = ({ show, handleClose, channelId }) => {
   const dispatch = useDispatch();
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    const newName = values.inputField;
+    const newName = filter.clean(values.inputField);
     const token = localStorage.getItem("token");
 
     try {

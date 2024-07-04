@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { addChannelApi } from "../../../api";
 import { useTranslation } from "react-i18next";
 import { toast } from 'react-toastify';
+import filter from 'leo-profanity';
 
 const AddChannelModal = ({ show, handleClose, setActiveChannel }) => {
   const { t } = useTranslation();
@@ -33,7 +34,7 @@ const AddChannelModal = ({ show, handleClose, setActiveChannel }) => {
     console.log(values);
 
     const token = localStorage.getItem("token");
-    const newChannel = { name: values.inputField };
+    const newChannel = { name: filter.clean(values.inputField) };
 
     try {
       setSubmitting(true);

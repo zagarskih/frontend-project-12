@@ -4,10 +4,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
 
 import initI18next from './initi18next';
+import initLeoprofanity from "./initLeoProf.js";
 
 const app = async () => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
   await initI18next();
+  initLeoprofanity();
 
   // const socket = initSocket(init18next);
 
