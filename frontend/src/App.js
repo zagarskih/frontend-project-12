@@ -1,14 +1,14 @@
 import React, { useContext, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ErrorPage from "./error-page.jsx";
-import Login from "./routes/login/Login.jsx";
+import ErrorPage from "./error-page.js";
+import Login from "./routes/login/Login.js";
 import ChatPage from "./routes/chat/ChatPage.js";
-import ProtectedRoute from "./routes/protectRoute.jsx";
+import ProtectedRoute from "./routes/protectRoute.js";
 import { Provider as ReduxProvider } from "react-redux";
 import store from "./store.js";
-import SignUp from "./routes/signUp/signup.jsx";
+import SignUp from "./routes/signUp/signup.js";
 import { ToastContainer } from "react-toastify";
-import AuthContext from "./tokenContext.jsx";
+import AuthContext from "./tokenContext.js";
 import { Provider, ErrorBoundary } from "@rollbar/react";
 import "react-toastify/dist/ReactToastify.css";
 
