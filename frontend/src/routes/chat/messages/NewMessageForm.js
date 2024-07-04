@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useDispatch } from "react-redux";
 import { addMessage } from "../chatSlice";
 import { sendMessageApi } from "../../../api";
 import { useTranslation } from "react-i18next";
 import { toast } from 'react-toastify';
+import AuthContext from "../../../tokenContext";
+import filter from 'leo-profanity';
 
 const NewMessageForm = ({ activeChannel }) => {
   const { t } = useTranslation();
+  const { user } = useContext(AuthContext);
   const [newMessage, setNewMessage] = useState("");
   const [isSubmiting, setSubmitting] = useState(false);
 
@@ -25,8 +28,8 @@ const NewMessageForm = ({ activeChannel }) => {
     const message = {
       id: Date.now(),
       channelId: activeChannel,
-      username: "Test",
-      body: newMessage,
+      username: user.username,
+      body: filter.clean(newMessage),
     };
     try {
       setSubmitting(true);
