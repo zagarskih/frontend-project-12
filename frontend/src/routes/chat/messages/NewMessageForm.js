@@ -1,6 +1,4 @@
 import React, { useState, useContext } from "react";
-import { useDispatch } from "react-redux";
-import { addMessage } from "../chatSlice";
 import { sendMessageApi } from "../../../api";
 import { useTranslation } from "react-i18next";
 import { toast } from 'react-toastify';
