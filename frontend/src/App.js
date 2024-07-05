@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./error-page.js";
-import Login from "./routes/login/Login.js";
+import Login from "./routes/login/LogIn.js";
 import ChatPage from "./routes/chat/ChatPage.js";
 import ProtectedRoute from "./routes/protectRoute.js";
 import { Provider as ReduxProvider } from "react-redux";
