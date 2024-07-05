@@ -6,7 +6,7 @@ import ChatPage from "./routes/chat/ChatPage.js";
 import ProtectedRoute from "./routes/protectRoute.js";
 import { Provider as ReduxProvider } from "react-redux";
 import store from "./store.js";
-import SignUp from "./routes/signUp/signup.js";
+import SignUp from "./routes/signUp/SignUp.js";
 import { ToastContainer } from "react-toastify";
 import AuthContext from "./tokenContext.js";
 import { Provider, ErrorBoundary } from "@rollbar/react";
