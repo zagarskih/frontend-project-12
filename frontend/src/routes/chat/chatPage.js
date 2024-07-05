@@ -5,7 +5,7 @@ import ChatMessages from "./messages/ChatMessages";
 import { fetchChatData } from "./chatSlice";
 import ChatHeader from "../HeaderChat";
 
-export default function ChatPage() {
+const ChatPage = () => {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
   const loading = useSelector((state) => state.chat.loading);
@@ -49,3 +49,5 @@ export default function ChatPage() {
     </div>
   );
 }
+
+export default ChatPage;
