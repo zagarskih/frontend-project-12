@@ -4,10 +4,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import { editChannelApi } from "../../../api";
-import { editChannel } from "../chatSlice";
 import { useTranslation } from "react-i18next";
-import { toast } from 'react-toastify';
-import filter from 'leo-profanity';
+import { toast } from "react-toastify";
+import { io } from "socket.io-client";
+import filter from "leo-profanity";
+
+const socket = io();
 
 const EditChannelModal = ({ show, handleClose, channelId }) => {
   const { t } = useTranslation();
@@ -34,8 +36,6 @@ const EditChannelModal = ({ show, handleClose, channelId }) => {
       ),
   });
 
-  const dispatch = useDispatch();
-
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     const newName = filter.clean(values.inputField);
     const token = localStorage.getItem("token");
@@ -43,13 +43,16 @@ const EditChannelModal = ({ show, handleClose, channelId }) => {
     try {
       setSubmitting(true);
       await editChannelApi(token, newName, channelId, t);
-      dispatch(editChannel({ channelId, newName }));
-      toast.success(t('toast.editChannel'));
+
+      const valuesForSocket = { id: channelId, name: newName };
+      socket.emit("renameChannel", valuesForSocket);
+
+      toast.success(t("toast.editChannel"));
       resetForm(); //?
       handleClose();
     } catch (error) {
-      console.error(t('errors.editing'), error);
-      toast.error(t('networkError'));
+      console.error(t("errors.editing"), error);
+      toast.error(t("networkError"));
     } finally {
       setSubmitting(false);
     }

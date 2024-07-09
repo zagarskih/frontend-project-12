@@ -4,6 +4,9 @@ import { useTranslation } from "react-i18next";
 import { toast } from 'react-toastify';
 import AuthContext from "../../../tokenContext";
 import filter from 'leo-profanity';
+import { io } from "socket.io-client";
+
+const socket = io();
 
 const NewMessageForm = ({ activeChannel }) => {
   const { t } = useTranslation();
@@ -32,6 +35,7 @@ const NewMessageForm = ({ activeChannel }) => {
     try {
       setSubmitting(true);
       await sendMessageApi(token, message, t);
+      socket.emit('newMessage', message);
       setNewMessage("");
     } catch (error) {
       console.error(t('errors.sending'), error);

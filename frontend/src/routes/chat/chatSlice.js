@@ -39,26 +39,23 @@ const chatSlice = createSlice({
   },
   reducers: {
     addMessage: (state, action) => {
-      const { message } = action.payload;
-      state.messages.push(message);
+      state.messages.push(action.payload);
     },
     addChannel: (state, action) => {
-      // const { channel } = action.payload;
       state.channels.push(action.payload);
     },
     deleteChannel: (state, action) => {
-      const { channelId } = action.payload;
-      state.channels = state.channels.filter(
-        (channel) => channel.id !== channelId
-      );
+      const { id } = action.payload;
+      console.log(id)
+      state.channels = state.channels.filter((channel) => channel.id !== id);
     },
     editChannel: (state, action) => {
-      const { channelId, newName } = action.payload;
+      const { id, name } = action.payload;
       const channelIndex = state.channels.findIndex(
-        (channel) => channel.id === channelId
+        (channel) => channel.id === id
       );
       if (channelIndex !== -1) {
-        state.channels[channelIndex].name = newName;
+        state.channels[channelIndex].name = name;
       }
     },
   },

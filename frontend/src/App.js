@@ -70,21 +70,21 @@ const router = createBrowserRouter([
 const App = () => {
   const dispatch = useDispatch();
 
-  socket.on('newMessage', (message) => {
-    dispatch(addMessage(message));
+  socket.on('newMessage', (payload) => {
+    dispatch(addMessage(payload));
   });
 
-  socket.on('newChannel', (channel) => {
-    dispatch(addChannel(channel));
+  socket.on('newChannel', (payload) => {
+    dispatch(addChannel(payload));
   });
 
-  socket.on('deleteChannel', (channel) => {
-    dispatch(deleteChannel(channel));
-    // dispatch(removeChannelMessages(channel));
+  socket.on('removeChannel', (payload) => {
+    dispatch(deleteChannel(payload));
+    // dispatch(deleteChannelMessages(channel));
   });
 
-  socket.on('editChannel', (channel) => {
-    dispatch(editChannel(channel));
+  socket.on('renameChannel', (payload) => {
+    dispatch(editChannel(payload));
   });
 
   const rollbarConfig = {
