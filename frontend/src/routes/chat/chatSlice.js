@@ -43,8 +43,8 @@ const chatSlice = createSlice({
       state.messages.push(message);
     },
     addChannel: (state, action) => {
-      const { channel } = action.payload;
-      state.channels.push(channel);
+      // const { channel } = action.payload;
+      state.channels.push(action.payload);
     },
     deleteChannel: (state, action) => {
       const { channelId } = action.payload;

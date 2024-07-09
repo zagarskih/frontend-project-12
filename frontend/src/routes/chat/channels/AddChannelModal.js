@@ -1,15 +1,19 @@
 import { Modal, Button } from "react-bootstrap";
-import React from "react";
+import React, { useContext } from "react";
 import { useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import { addChannelApi } from "../../../api";
 import { useTranslation } from "react-i18next";
 import { toast } from 'react-toastify';
+import { io } from 'socket.io-client';
 import filter from 'leo-profanity';
+
+const socket = io();
 
 const AddChannelModal = ({ show, handleClose, setActiveChannel }) => {
   const { t } = useTranslation();
+
   const initialValues = {
     inputField: "",
   };
@@ -39,8 +43,10 @@ const AddChannelModal = ({ show, handleClose, setActiveChannel }) => {
     try {
       setSubmitting(true);
       const createdChannel = await addChannelApi(token, newChannel, t);
-      toast.success(t('toast.addChannel'));
+      console.log(createdChannel)
+      socket.emit('newChannel', createdChannel);
       setActiveChannel(createdChannel.id);
+      toast.success(t('toast.addChannel'));
       resetForm();
       handleClose();
     } catch (error) {

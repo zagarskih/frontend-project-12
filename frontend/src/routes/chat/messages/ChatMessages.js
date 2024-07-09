@@ -7,24 +7,8 @@ import { useTranslation } from "react-i18next";
 
 const СhatMessages = ({ activeChannel }) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
   const messages = useSelector((state) => state.chat.messages);
   const channels = useSelector((state) => state.chat.channels);
-
-  useEffect(() => {
-    console.log("Initializing socket...");
-    initSocket();
-  }, []);
-
-  useEffect(() => {
-    initSocket((message) => {
-      dispatch(addMessage({ message }));
-    });
-
-    return () => {
-      disconnectSocket();
-    };
-  }, [dispatch]);
 
   const getMessagesByChannel = (messages, channel) => {
     return messages.filter((msg) => {

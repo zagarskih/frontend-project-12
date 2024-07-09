@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useDispatch } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./error-page.js";
 import Login from "./routes/login/LogIn.js";
@@ -10,7 +11,11 @@ import SignUp from "./routes/signUp/SignUp.js";
 import { ToastContainer } from "react-toastify";
 import AuthContext from "./tokenContext.js";
 import { Provider, ErrorBoundary } from "@rollbar/react";
+import { io } from 'socket.io-client';
+import { addMessage, addChannel, deleteChannel, editChannel } from "./routes/chat/chatSlice.js";
 import "react-toastify/dist/ReactToastify.css";
+
+const socket = io();
 
 const AuthProvider = ({ children }) => {
   const currentUser = JSON.parse(localStorage.getItem("user"));
@@ -62,12 +67,26 @@ const router = createBrowserRouter([
   },
 ]);
 
-// const TestError = () => {
-//   const a = null;
-//   return a.hello();
-// };
-
 const App = () => {
+  const dispatch = useDispatch();
+
+  socket.on('newMessage', (message) => {
+    dispatch(addMessage(message));
+  });
+
+  socket.on('newChannel', (channel) => {
+    dispatch(addChannel(channel));
+  });
+
+  socket.on('deleteChannel', (channel) => {
+    dispatch(deleteChannel(channel));
+    // dispatch(removeChannelMessages(channel));
+  });
+
+  socket.on('editChannel', (channel) => {
+    dispatch(editChannel(channel));
+  });
+
   const rollbarConfig = {
     accessToken: "3a0fbeb3dce14e78b4ff4ed823304ddb",
     environment: "testenv",
@@ -80,7 +99,6 @@ const App = () => {
           <AuthProvider>
             <ToastContainer />
             <RouterProvider router={router} />
-            {/* <TestError /> */}
           </AuthProvider>
         </ReduxProvider>
       </ErrorBoundary>
