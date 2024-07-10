@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "cd frontend && npm ci"
   },
-  "author": "",
+  "author": "Ekaterina Zagarskih",
   "license": "ISC",
   "dependencies": {
     "@hexlet/chat-server": "^2.0.3",
