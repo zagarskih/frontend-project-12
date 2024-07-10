@@ -50,10 +50,7 @@ const AuthProvider = ({ children }) => {
 
 const ProtectedRoute = ({ children }) => {
   const { user } = React.useContext(AuthContext);
-  if (!user) {
-    return <Navigate to="/login" />;
-  }
-  return <Route>{children}</Route>;
+  return user ? <Route>{children}</Route> : <Navigate to="/login" />;
 };
 
 const App = () => {
