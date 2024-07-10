@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Provider as ReduxProvider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import AuthContext from "./tokenContext.js";
@@ -10,7 +10,7 @@ import store from "./store.js";
 import ErrorPage from "./error-page.js";
 import Login from "./routes/login/LogIn.js";
 import ChatPage from "./routes/chat/ChatPage.js";
-import ProtectedRoute from "./routes/protectRoute.js";
+// import ProtectedRoute from "./routes/protectRoute.js";
 import SignUp from "./routes/signUp/SignUp.js";
 import { addMessage, addChannel, deleteChannel, editChannel } from "./routes/chat/chatSlice.js";
 import "react-toastify/dist/ReactToastify.css";
@@ -24,6 +24,7 @@ const AuthProvider = ({ children }) => {
   );
 
   const logIn = (userData) => {
+    localStorage.setItem("token", userData.token);
     localStorage.setItem("user", JSON.stringify(userData));
     setUser({ username: userData.username });
   };
@@ -45,6 +46,14 @@ const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+const ProtectedRoute = ({ children }) => {
+  const { user } = React.useContext(AuthContext);
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+  return children;
 };
 
 const App = () => {
