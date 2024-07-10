@@ -22,9 +22,9 @@
   },
   "validation": {
     "notFilled": "Обязательное поле",
-    "wrongLength": "Допустимая длина от 3 до 20 символов",
+    "wrongLength": "От 3 до 20 символов",
     "notUnique": "Имя уже существует",
-    "passwordLength": "Введите не менее 6 символов",
+    "passwordLength": "Не менее 6 символов",
     "notSamePassword": "Пароли должны совпадать"
   },
   "interface": {
@@ -51,7 +51,8 @@
     "signUpButton": "Зарегистрироваться",
     "notFound": "Страница не найдена",
     "errorPageBody": "Но вы можете перейти на",
-    "errorPageLink": "главную страницу"
+    "errorPageLink": "главную страницу",
+    "addChannelButton": "+"
   },
   "toast": {
     "addChannel": "Канал создан",
