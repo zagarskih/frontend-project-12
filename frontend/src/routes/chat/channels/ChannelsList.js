@@ -11,12 +11,12 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
   const channels = useSelector((state) => state.chat.channels);
 
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  const [openMenuChannelId, setOpenMenuChannelId] = useState(null);
+  const menuRef = useRef(null);
 
   const handleCloseAddModal = () => setShowAddModal(false);
   const handleShowAddModal = () => setShowAddModal(true);
-
-  const [showMenu, setShowMenu] = useState(false);
-  const [openMenuChannelId, setOpenMenuChannelId] = useState(null);
 
   const handleCloseMenu = () => {
     setShowMenu(false);
@@ -27,20 +27,18 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
     setOpenMenuChannelId(channelId);
   };
 
-  const menuRef = useRef(null);
+  const handleClickOutside = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      handleCloseMenu();
+    }
+  };
 
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (menuRef.current && !menuRef.current.contains(event.target)) {
-  //       handleCloseMenu();
-  //     }
-  //   };
-
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, [menuRef]);
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     handleCloseMenu();
@@ -74,7 +72,7 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
               onClick={() => onChannelClick(channel.id)}
               key={channel.id}
             >
-              <div role="group" class="d-flex show dropdown btn-group">
+              <div role="group" class="d-flex show dropdown btn-group"  ref={menuRef}>
                 <button
                   type="button"
                   className={classNames(
