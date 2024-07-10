@@ -5,14 +5,19 @@ import { Provider as ReduxProvider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import AuthContext from "./tokenContext.js";
 import { Provider, ErrorBoundary } from "@rollbar/react";
-import { io } from 'socket.io-client';
+import { io } from "socket.io-client";
 import store from "./store.js";
 import ErrorPage from "./error-page.js";
 import Login from "./routes/login/LogIn.js";
 import ChatPage from "./routes/chat/ChatPage.js";
 // import ProtectedRoute from "./routes/protectRoute.js";
 import SignUp from "./routes/signUp/SignUp.js";
-import { addMessage, addChannel, deleteChannel, editChannel } from "./routes/chat/chatSlice.js";
+import {
+  addMessage,
+  addChannel,
+  deleteChannel,
+  editChannel,
+} from "./routes/chat/chatSlice.js";
 import "react-toastify/dist/ReactToastify.css";
 
 const socket = io();
@@ -49,27 +54,27 @@ const AuthProvider = ({ children }) => {
 };
 
 const ProtectedRoute = ({ children }) => {
-  const { user } = React.useContext(AuthContext);
-  return user ? <>{children}</> : <Navigate to="/login" />;
+  const token = localStorage.getItem("token");
+  return token ? <Route>{children}</Route> : <Navigate to="/login" />;
 };
 
 const App = () => {
   const dispatch = useDispatch();
 
-  socket.on('newMessage', (payload) => {
+  socket.on("newMessage", (payload) => {
     dispatch(addMessage(payload));
   });
 
-  socket.on('newChannel', (payload) => {
+  socket.on("newChannel", (payload) => {
     dispatch(addChannel(payload));
   });
 
-  socket.on('removeChannel', (payload) => {
+  socket.on("removeChannel", (payload) => {
     dispatch(deleteChannel(payload));
     // dispatch(deleteChannelMessages(channel));
   });
 
-  socket.on('renameChannel', (payload) => {
+  socket.on("renameChannel", (payload) => {
     dispatch(editChannel(payload));
   });
 
