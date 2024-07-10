@@ -20,7 +20,6 @@ const DeleteChannelModal = ({
 
   const handleDelete = async () => {
     const token = localStorage.getItem("token");
-    console.log(channelId);
 
     try {
       setSubmitting(true);

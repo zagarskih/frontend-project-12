@@ -1,13 +1,13 @@
+import React from "react";
 import { Modal, Button } from "react-bootstrap";
-import React, { useContext } from "react";
 import { useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import { addChannelApi } from "../../../api";
 import { useTranslation } from "react-i18next";
-import { toast } from 'react-toastify';
-import { io } from 'socket.io-client';
-import filter from 'leo-profanity';
+import { toast } from "react-toastify";
+import { io } from "socket.io-client";
+import filter from "leo-profanity";
 
 const socket = io();
 
@@ -35,23 +35,21 @@ const AddChannelModal = ({ show, handleClose, setActiveChannel }) => {
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    console.log(values);
-
     const token = localStorage.getItem("token");
     const newChannel = { name: filter.clean(values.inputField) };
 
     try {
       setSubmitting(true);
       const createdChannel = await addChannelApi(token, newChannel, t);
-      console.log(createdChannel)
-      socket.emit('newChannel', createdChannel);
+      console.log(createdChannel);
+      socket.emit("newChannel", createdChannel);
       setActiveChannel(createdChannel.id);
-      toast.success(t('toast.addChannel'));
+      toast.success(t("toast.addChannel"));
       resetForm();
       handleClose();
     } catch (error) {
-      console.error(t('errors.creatingChannel'), error);
-      toast.error(t('networkError'));
+      console.error(t("errors.creatingChannel"), error);
+      toast.error(t("networkError"));
     } finally {
       setSubmitting(false);
     }

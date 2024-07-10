@@ -20,6 +20,7 @@ const NewMessageForm = ({ activeChannel }) => {
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
+
     const token = localStorage.getItem("token");
     if (!token) {
       console.error("Токен отсутствует.");
@@ -32,6 +33,7 @@ const NewMessageForm = ({ activeChannel }) => {
       username: user.username,
       body: filter.clean(newMessage),
     };
+
     try {
       setSubmitting(true);
       await sendMessageApi(token, message, t);
@@ -48,7 +50,7 @@ const NewMessageForm = ({ activeChannel }) => {
   return (
     <div className="mt-auto px-5 py-3">
       <form
-        novalidate
+        noValidate
         className="py-1 border rounded-2"
         onSubmit={handleSendMessage}
       >

@@ -1,6 +1,6 @@
 import { Modal, Button } from "react-bootstrap";
-import React, { useRef, useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import { editChannelApi } from "../../../api";
@@ -48,7 +48,7 @@ const EditChannelModal = ({ show, handleClose, channelId }) => {
       socket.emit("renameChannel", valuesForSocket);
 
       toast.success(t("toast.editChannel"));
-      resetForm(); //?
+      resetForm();
       handleClose();
     } catch (error) {
       console.error(t("errors.editing"), error);

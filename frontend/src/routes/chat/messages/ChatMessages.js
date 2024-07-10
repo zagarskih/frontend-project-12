@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import NewMessageForm from "./NewMessageForm";
-import { addMessage } from "../chatSlice";
-import { initSocket, disconnectSocket } from "../../../socket";
+import React from "react";
+import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import NewMessageForm from "./NewMessageForm";
 
 const СhatMessages = ({ activeChannel }) => {
   const { t } = useTranslation();

@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
-import DeleteChannelModal from "./DeleteChannelModal";
-import EditChannelModal from "./EditChannelModal";
-import classNames from "classnames";
 import { useSelector } from "react-redux";
 import { createPopper } from "@popperjs/core";
 import { useTranslation } from "react-i18next";
+import classNames from "classnames";
+import DeleteChannelModal from "./DeleteChannelModal";
+import EditChannelModal from "./EditChannelModal";
 
 const DropDownMenu = ({
   showMenu,

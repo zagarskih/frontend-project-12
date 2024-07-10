@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import classNames from "classnames";
 import AddChannelModal from "./AddChannelModal";
 import DropDownMenu from "./DropDownMenu";
-import { useTranslation } from "react-i18next";
 
 const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
   const { t } = useTranslation();
@@ -13,7 +13,6 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [openMenuChannelId, setOpenMenuChannelId] = useState(null);
-  const menuRefs = useRef([]);
 
   const handleCloseAddModal = () => setShowAddModal(false);
   const handleShowAddModal = () => setShowAddModal(true);
@@ -53,16 +52,13 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
           id="channels-box"
           className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block"
         >
-          {channels.map((channel, index) => (
+          {channels.map((channel) => (
             <li
               className="nav-item w-100"
               onClick={() => onChannelClick(channel.id)}
               key={channel.id}
             >
-              <div
-                role="group"
-                class="d-flex show dropdown btn-group"
-              >
+              <div role="group" className="d-flex show dropdown btn-group">
                 <button
                   type="button"
                   className={classNames(
@@ -77,7 +73,7 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
                   <span className="me-1">#</span>
                   {channel.name}
                 </button>
-                {channel.removable === true ? (
+                {channel.removable && (
                   <DropDownMenu
                     showMenu={showMenu}
                     openMenuChannelId={openMenuChannelId}
@@ -87,8 +83,6 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
                     handleCloseMenu={handleCloseMenu}
                     channel={channel}
                   />
-                ) : (
-                  <></>
                 )}
               </div>
             </li>

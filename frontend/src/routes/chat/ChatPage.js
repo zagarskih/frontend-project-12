@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchChatData } from "./chatSlice";
 import ChannelsList from "./channels/ChannelsList";
 import ChatMessages from "./messages/ChatMessages";
-import { fetchChatData } from "./chatSlice";
 import ChatHeader from "../HeaderChat";
 
 const ChatPage = () => {
