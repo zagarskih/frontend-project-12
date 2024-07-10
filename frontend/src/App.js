@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ErrorPage from "./error-page.js";
-import Login from "./routes/login/LogIn.js";
-import ChatPage from "./routes/chat/ChatPage.js";
-import ProtectedRoute from "./routes/protectRoute.js";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider as ReduxProvider } from "react-redux";
-import store from "./store.js";
-import SignUp from "./routes/signUp/SignUp.js";
 import { ToastContainer } from "react-toastify";
 import AuthContext from "./tokenContext.js";
 import { Provider, ErrorBoundary } from "@rollbar/react";
 import { io } from 'socket.io-client';
+import store from "./store.js";
+import ErrorPage from "./error-page.js";
+import Login from "./routes/login/LogIn.js";
+import ChatPage from "./routes/chat/ChatPage.js";
+import ProtectedRoute from "./routes/protectRoute.js";
+import SignUp from "./routes/signUp/SignUp.js";
 import { addMessage, addChannel, deleteChannel, editChannel } from "./routes/chat/chatSlice.js";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -47,26 +47,6 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <ProtectedRoute>
-        <ChatPage />
-      </ProtectedRoute>
-    ),
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/signup",
-    element: <SignUp />,
-  },
-]);
-
 const App = () => {
   const dispatch = useDispatch();
 
@@ -98,7 +78,14 @@ const App = () => {
         <ReduxProvider store={store}>
           <AuthProvider>
             <ToastContainer />
-            <RouterProvider router={router} />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<ProtectedRoute><ChatPage /></ProtectedRoute>} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="*" element={<ErrorPage />} />
+              </Routes>
+            </BrowserRouter>
           </AuthProvider>
         </ReduxProvider>
       </ErrorBoundary>
