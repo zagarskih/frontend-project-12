@@ -39,7 +39,7 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
           type="button"
           className="p-0 text-primary btn btn-group-vertical"
         >
-          +
+          {t("interface.addChannelButton")}
         </button>
         <AddChannelModal
           setActiveChannel={setActiveChannel}
@@ -70,6 +70,7 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
                     { "btn-secondary": channel.id === activeChannel }
                   )}
                 >
+                  <span className="visually-hidden">Имя канала</span>
                   <span className="me-1">#</span>
                   {channel.name}
                 </button>
