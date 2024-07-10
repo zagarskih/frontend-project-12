@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
 import ChatHeader from "../HeaderChat";
 import * as yup from "yup";
 import { sighUpApi } from "../../api";
@@ -71,7 +71,7 @@ const SignUp = () => {
                     <div className="card-body row p-5">
                       <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                         <img
-                          src="/login.webp"
+                          src="/signup.png"
                           className="img-fluid"
                           alt="Войти"
                         />
