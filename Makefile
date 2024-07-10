@@ -1,2 +1,8 @@
+install:
+	npm ci
+	
 build:
-		npm run build
+	npm run build
+
+start:
+	npm start
