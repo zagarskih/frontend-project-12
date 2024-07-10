@@ -13,7 +13,7 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [openMenuChannelId, setOpenMenuChannelId] = useState(null);
-  const menuRef = useRef(null);
+  const menuRefs = useRef([]);
 
   const handleCloseAddModal = () => setShowAddModal(false);
   const handleShowAddModal = () => setShowAddModal(true);
@@ -26,19 +26,6 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
     setShowMenu(true);
     setOpenMenuChannelId(channelId);
   };
-
-  const handleClickOutside = (event) => {
-    if (menuRef.current && !menuRef.current.contains(event.target)) {
-      handleCloseMenu();
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   useEffect(() => {
     handleCloseMenu();
@@ -66,13 +53,16 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
           id="channels-box"
           className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block"
         >
-          {channels.map((channel) => (
+          {channels.map((channel, index) => (
             <li
               className="nav-item w-100"
               onClick={() => onChannelClick(channel.id)}
               key={channel.id}
             >
-              <div role="group" class="d-flex show dropdown btn-group"  ref={menuRef}>
+              <div
+                role="group"
+                class="d-flex show dropdown btn-group"
+              >
                 <button
                   type="button"
                   className={classNames(
