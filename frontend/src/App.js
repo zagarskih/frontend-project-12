@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import {
-  BrowserRouter,
-  Routes,
-  Route,
   Navigate,
   useLocation,
   createBrowserRouter,
@@ -18,7 +15,6 @@ import store from "./store.js";
 import ErrorPage from "./error-page.js";
 import Login from "./routes/login/LogIn.js";
 import ChatPage from "./routes/chat/ChatPage.js";
-// import ProtectedRoute from "./routes/protectRoute.js";
 import SignUp from "./routes/signUp/SignUp.js";
 import {
   addMessage,
@@ -63,8 +59,9 @@ const AuthProvider = ({ children }) => {
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("token");
+  console.log(!!token);
   const location = useLocation();
-  return token ? children : <Navigate to="/login" state={{ from: location }} />;
+  return !!token ? children : <Navigate to="/login" state={{ from: location }} />;
 };
 
 const router = createBrowserRouter([
@@ -125,25 +122,10 @@ const App = () => {
     <Provider config={rollbarConfig}>
       <ErrorBoundary>
         <ReduxProvider store={store}>
-          {/* <BrowserRouter> */}
             <AuthProvider>
               <ToastContainer />
               <RouterProvider router={router} />
-              {/* <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <ProtectedRoute>
-                      <ChatPage />
-                    </ProtectedRoute>
-                  }
-                />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="*" element={<ErrorPage />} />
-              </Routes> */}
             </AuthProvider>
-          {/* </BrowserRouter> */}
         </ReduxProvider>
       </ErrorBoundary>
     </Provider>
