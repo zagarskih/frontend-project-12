@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+  createBrowserRouter,
+  RouterProvider
+} from "react-router-dom";
 import { Provider as ReduxProvider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import AuthContext from "./tokenContext.js";
@@ -53,10 +61,31 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-const ProtectedRoute = ({ element }) => {
+const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("token");
-  return token ? element : <Navigate to="/login" />;
+  const location = useLocation();
+  return token ? children : <Navigate to="/login" state={{ from: location }} />;
 };
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <ProtectedRoute>
+        <ChatPage />
+      </ProtectedRoute>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <SignUp />,
+  },
+]);
 
 const App = () => {
   const dispatch = useDispatch();
@@ -96,19 +125,25 @@ const App = () => {
     <Provider config={rollbarConfig}>
       <ErrorBoundary>
         <ReduxProvider store={store}>
-          <AuthProvider>
-            <ToastContainer />
-            <BrowserRouter>
-              <Routes>
-                <Route element={<ProtectedRoute />}>
-                  <Route path="/" element={<ChatPage />} />
-                </Route>
+          {/* <BrowserRouter> */}
+            <AuthProvider>
+              <ToastContainer />
+              <RouterProvider router={router} />
+              {/* <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <ProtectedRoute>
+                      <ChatPage />
+                    </ProtectedRoute>
+                  }
+                />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="*" element={<ErrorPage />} />
-              </Routes>
-            </BrowserRouter>
-          </AuthProvider>
+              </Routes> */}
+            </AuthProvider>
+          {/* </BrowserRouter> */}
         </ReduxProvider>
       </ErrorBoundary>
     </Provider>
