@@ -2,13 +2,11 @@ import axios from "axios";
 
 export const sendMessageApi = async (token, newMessage, t) => {
   try {
-    console.log("Sending message:", newMessage);
     const response = await axios.post("/api/v1/messages", newMessage, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response.data); // => { id: '1', body: 'new message', channelId: '1', username: 'admin' }
     return response.data;
   } catch (error) {
     console.error(t('errorsApi.sending'), error);
@@ -23,7 +21,6 @@ export const addChannelApi = async (token, newChannel, t) => {
         Authorization: `Bearer ${token}`,
       }
     });
-    console.log(response.data); // => { id: '3', name: 'new channel', removable: true }
     return response.data;
   } catch (error) {
     console.error(t('errorsApi.creatingChannel'), error);
@@ -54,7 +51,6 @@ export const deleteMessagesByChannel = async (token, channelId, messages, t) => 
           Authorization: `Bearer ${token}`,
         }
       });
-      console.log(`Deleted message with id ${id}`);
     }
   } catch (error) {
     console.error(t('errorsApi.deletingMessages'), error);
@@ -70,7 +66,6 @@ export const editChannelApi = async (token, newName, channelId, t) => {
         Authorization: `Bearer ${token}`,
       }
     });
-    console.log(`Переименован канал ${channelId} ${newName}`)
   } catch (error) {
     console.error(t('errorsApi.editing'), error);
     throw error;
@@ -80,7 +75,6 @@ export const editChannelApi = async (token, newName, channelId, t) => {
 export const sighUpApi = async (username, password, t) => {
   try {
     const response = await axios.post('/api/v1/signup', { username: username, password: password });
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(t('errorsApi.signUp'), error);
@@ -91,7 +85,6 @@ export const sighUpApi = async (username, password, t) => {
 export const logInApi = async (username, password, t) => {
   try {
     const response = await axios.post("/api/v1/login", { username: username, password: password });
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(t('errorsApi.signIn'), error);
