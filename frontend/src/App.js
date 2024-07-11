@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Provider as ReduxProvider } from "react-redux";
@@ -53,30 +53,39 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ element }) => {
   const token = localStorage.getItem("token");
-  return token ? <Route>{children}</Route> : <Navigate to="/login" />;
+  return token ? element : <Navigate to="/login" />;
 };
 
 const App = () => {
   const dispatch = useDispatch();
 
-  socket.on("newMessage", (payload) => {
-    dispatch(addMessage(payload));
-  });
+  useEffect(() => {
+    socket.on("newMessage", (payload) => {
+      dispatch(addMessage(payload));
+    });
+  
+    socket.on("newChannel", (payload) => {
+      dispatch(addChannel(payload));
+    });
+  
+    socket.on("removeChannel", (payload) => {
+      dispatch(deleteChannel(payload));
+      // dispatch(deleteChannelMessages(channel));
+    });
+  
+    socket.on("renameChannel", (payload) => {
+      dispatch(editChannel(payload));
+    });
 
-  socket.on("newChannel", (payload) => {
-    dispatch(addChannel(payload));
-  });
-
-  socket.on("removeChannel", (payload) => {
-    dispatch(deleteChannel(payload));
-    // dispatch(deleteChannelMessages(channel));
-  });
-
-  socket.on("renameChannel", (payload) => {
-    dispatch(editChannel(payload));
-  });
+    return () => {
+      socket.off("newMessage");
+      socket.off("newChannel");
+      socket.off("removeChannel");
+      socket.off("renameChannel");
+    };
+  }, [dispatch]);
 
   const rollbarConfig = {
     accessToken: "3a0fbeb3dce14e78b4ff4ed823304ddb",
@@ -91,7 +100,7 @@ const App = () => {
             <ToastContainer />
             <BrowserRouter>
               <Routes>
-                <Route path="/" element={<ProtectedRoute><ChatPage /></ProtectedRoute>} />
+                <Route path="/" element={<ProtectedRoute element={<ChatPage />} />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="*" element={<ErrorPage />} />
