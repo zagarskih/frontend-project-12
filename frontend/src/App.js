@@ -65,16 +65,16 @@ const App = () => {
     socket.on("newMessage", (payload) => {
       dispatch(addMessage(payload));
     });
-  
+
     socket.on("newChannel", (payload) => {
       dispatch(addChannel(payload));
     });
-  
+
     socket.on("removeChannel", (payload) => {
       dispatch(deleteChannel(payload));
       // dispatch(deleteChannelMessages(channel));
     });
-  
+
     socket.on("renameChannel", (payload) => {
       dispatch(editChannel(payload));
     });
@@ -100,7 +100,9 @@ const App = () => {
             <ToastContainer />
             <BrowserRouter>
               <Routes>
-                <Route path="/" element={<ProtectedRoute element={<ChatPage />} />} />
+                <Route element={<ProtectedRoute />}>
+                  <Route path="/" element={<ChatPage />} />
+                </Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="*" element={<ErrorPage />} />
