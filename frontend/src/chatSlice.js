@@ -1,24 +1,21 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import API_ROUTES from "./apiRoutes";
 
 export const fetchChatData = createAsyncThunk(
   "chat/fetchChannelsAndMessages",
   async (token, { rejectWithValue }) => {
     try {
-      const channelsResponse = await axios.get("/api/v1/channels", {
+      const channelsResponse = await axios.get(API_ROUTES.channels.base(), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(channelsResponse.data); // => [{ id: '1', name: 'general', removable: false }, ...]
-
-      const messagesResponse = await axios.get("/api/v1/messages", {
+      const messagesResponse = await axios.get(API_ROUTES.messages.base(), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(messagesResponse.data); // => [{ id: '1', body: 'text message', channelId: '1', username: 'admin }, ...]
-
       return {
         channels: channelsResponse.data,
         messages: messagesResponse.data,
