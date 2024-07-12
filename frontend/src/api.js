@@ -1,8 +1,9 @@
 import axios from "axios";
+import API_ROUTES from './apiRoutes';
 
 export const sendMessageApi = async (token, newMessage, t) => {
   try {
-    const response = await axios.post("/api/v1/messages", newMessage, {
+    const response = await axios.post(API_ROUTES.messages.base(), newMessage, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -16,7 +17,7 @@ export const sendMessageApi = async (token, newMessage, t) => {
 
 export const addChannelApi = async (token, newChannel, t) => {
   try {
-    const response = await axios.post("/api/v1/channels", newChannel, {
+    const response = await axios.post(API_ROUTES.channels.base(), newChannel, {
       headers: {
         Authorization: `Bearer ${token}`,
       }
@@ -30,7 +31,7 @@ export const addChannelApi = async (token, newChannel, t) => {
 
 export const deleteChannelApi = async (token, channelId, t) => {
   try {
-    const response = await axios.delete(`/api/v1/channels/${channelId}`, {
+    const response = await axios.delete(API_ROUTES.channels.byId(channelId), {
       headers: {
         Authorization: `Bearer ${token}`,
       }
@@ -46,7 +47,7 @@ export const deleteMessagesByChannel = async (token, channelId, messages, t) => 
   try {
     const messagesIds = messages.filter((message) => message.channelId === channelId).map((message) => message.id);
     for (const id of messagesIds) {
-      await axios.delete(`/api/v1/messages/${id}`, {
+      await axios.delete(API_ROUTES.messages.byId(id), {
         headers: {
           Authorization: `Bearer ${token}`,
         }
@@ -61,7 +62,7 @@ export const deleteMessagesByChannel = async (token, channelId, messages, t) => 
 export const editChannelApi = async (token, newName, channelId, t) => {
   const editedChannel = { name: newName };
   try {
-    await axios.patch(`/api/v1/channels/${channelId}`, editedChannel, {
+    await axios.patch(API_ROUTES.channels.byId(channelId), editedChannel, {
       headers: {
         Authorization: `Bearer ${token}`,
       }
@@ -74,7 +75,7 @@ export const editChannelApi = async (token, newName, channelId, t) => {
 
 export const sighUpApi = async (username, password, t) => {
   try {
-    const response = await axios.post('/api/v1/signup', { username: username, password: password });
+    const response = await axios.post(API_ROUTES.auth.signup(), { username, password });
     return response.data;
   } catch (error) {
     console.error(t('errorsApi.signUp'), error);
@@ -84,7 +85,7 @@ export const sighUpApi = async (username, password, t) => {
 
 export const logInApi = async (username, password, t) => {
   try {
-    const response = await axios.post("/api/v1/login", { username: username, password: password });
+    const response = await axios.post(API_ROUTES.auth.login(), { username, password });
     return response.data;
   } catch (error) {
     console.error(t('errorsApi.signIn'), error);
