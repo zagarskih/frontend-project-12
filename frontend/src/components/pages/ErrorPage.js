@@ -1,6 +1,6 @@
 import { useRouteError } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import ChatHeader from "./routes/HeaderChat";
+import ChatHeader from "../elements/HeaderChat";
 
 export default function ErrorPage() {
   const { t } = useTranslation();

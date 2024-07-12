@@ -12,16 +12,16 @@ import AuthContext from "./tokenContext.js";
 import { Provider, ErrorBoundary } from "@rollbar/react";
 import { io } from "socket.io-client";
 import store from "./store.js";
-import ErrorPage from "./error-page.js";
-import Login from "./routes/login/LogIn.js";
-import ChatPage from "./routes/chat/ChatPage.js";
-import SignUp from "./routes/signUp/SignUp.js";
+import ErrorPage from "./components/pages/ErrorPage.js";
+import Login from "./components/pages/LogIn.js";
+import SignUp from "./components/pages/SignUp.js";
+import ChatPage from "./components/pages/ChatPage.js";
 import {
   addMessage,
   addChannel,
   deleteChannel,
   editChannel,
-} from "./routes/chat/chatSlice.js";
+} from "./chatSlice.js";
 import "react-toastify/dist/ReactToastify.css";
 
 const socket = io();

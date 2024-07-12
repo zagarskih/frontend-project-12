@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import AuthContext from "../tokenContext";
+import AuthContext from "../../tokenContext";
 
 const ChatHeader = () => {
   const { t } = useTranslation();

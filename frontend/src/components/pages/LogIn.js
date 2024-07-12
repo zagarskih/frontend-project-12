@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import ChatHeader from "../HeaderChat";
+import { logInApi } from "../../api";
+import ChatHeader from "../elements/HeaderChat";
 import * as yup from "yup";
-import { sighUpApi } from "../../api";
 import { useTranslation } from "react-i18next";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import AuthContext from "../../tokenContext";
 
-const SignUp = () => {
+const Login = () => {
   const { t } = useTranslation();
   const { logIn } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -18,19 +18,19 @@ const SignUp = () => {
       setSubmitting(true);
       const username = values.username;
       const password = values.password;
-      const response = await sighUpApi(username, password, t);
+      const response = await logInApi(username, password, t);
       logIn(response);
       const token = response.token;
       localStorage.setItem("token", token);
       navigate("/");
     } catch (error) {
-      if (error.response.status === 409) {
-        setStatus({ error: t('errors.notUnique') });
+      if (error.response.status === 401) {
+        setStatus({ error: t("errors.wrongLoginPassword") });
       } else if (!error.isAxiosError) {
-        setStatus({ error: t('errors.signUp') });
-        toast.error(t('unknownError'));
+        toast.error(t("unknownError"));
+        return;
       } else {
-        toast.error(t('networkError'));
+        toast.error(t("networkError"));
       }
     } finally {
       setSubmitting(false);
@@ -38,24 +38,13 @@ const SignUp = () => {
   };
 
   const validationSchema = yup.object({
-    username: yup
-      .string()
-      .required(t("validation.notFilled"))
-      .min(3, t("validation.wrongLength"))
-      .max(20, t("validation.wrongLength")),
-    password: yup
-      .string()
-      .required(t("validation.notFilled"))
-      .min(6, t("validation.passwordLength")),
-    repeatPassword: yup
-      .string()
-      .oneOf([yup.ref("password"), null], t("validation.notSamePassword")),
+    username: yup.string().required(t("validation.notFilled")),
+    password: yup.string().required(t("validation.notFilled")),
   });
 
   const initialValues = {
     username: "",
     password: "",
-    repeatPassword: "",
   };
 
   return (
@@ -71,7 +60,7 @@ const SignUp = () => {
                     <div className="card-body row p-5">
                       <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                         <img
-                          src="/signup.png"
+                          src="/login.png"
                           className="img-fluid"
                           alt="Войти"
                         />
@@ -80,13 +69,14 @@ const SignUp = () => {
                         <Formik
                           initialValues={initialValues}
                           validationSchema={validationSchema}
-                          validateOnBlur={false}
                           onSubmit={handleSubmit}
+                          validateOnChange={false}
+                          validateOnBlur={false}
                         >
                           {({ isSubmitting, errors, touched, status }) => (
                             <Form>
                               <h1 className="text-center mb-4">
-                                {t("interface.signUp")}
+                                {t("interface.signIn")}
                               </h1>
                               <div className="form-floating mb-3">
                                 <Field
@@ -101,16 +91,10 @@ const SignUp = () => {
                                   autoFocus
                                 />
                                 <label htmlFor="username">
-                                  {t("interface.newUser")}
+                                  {t("interface.nickname")}
                                 </label>
-                                <div
-                                  placement="right"
-                                  className="invalid-tooltip"
-                                >
-                                  {errors.username}
-                                </div>
                               </div>
-                              <div className="form-floating mb-3">
+                              <div className="form-floating mb-4">
                                 <Field
                                   type="password"
                                   name="password"
@@ -124,39 +108,12 @@ const SignUp = () => {
                                 <label htmlFor="password">
                                   {t("interface.password")}
                                 </label>
-                                <div
-                                  placement="right"
-                                  className="invalid-tooltip"
-                                >
-                                  {errors.password}
-                                </div>
-                              </div>
-                              <div className="form-floating mb-4">
-                                <Field
-                                  type="password"
-                                  name="repeatPassword"
-                                  className={`form-control ${
-                                    errors.repeatPassword &&
-                                    touched.repeatPassword
-                                      ? "is-invalid"
-                                      : ""
-                                  }`}
-                                  placeholder="Password"
-                                />
-                                <label htmlFor="password">
-                                  {t("interface.repeatPassword")}
-                                </label>
-                                <div
-                                  placement="right"
-                                  className="invalid-tooltip"
-                                >
-                                  {errors.repeatPassword}
-                                </div>
                                 {status && status.error && (
                                   <div className="alert alert-danger mt-2">
                                     {status.error}
                                   </div>
                                 )}
+                                {/* {(errors.username || errors.password) && (<div className="alert alert-danger">Пожалуйста, введите логин и пароль</div>)} */}
                               </div>
                               <button
                                 type="submit"
@@ -165,11 +122,17 @@ const SignUp = () => {
                                   isSubmitting || Object.keys(errors).length > 0
                                 }
                               >
-                                {t("interface.signUpButton")}
+                                {t("interface.signIn")}
                               </button>
                             </Form>
                           )}
                         </Formik>
+                      </div>
+                    </div>
+                    <div className="card-footer p-4">
+                      <div className="text-center">
+                        <span>{t("interface.noAcc")} </span>
+                        <a href="/signup">{t("interface.signUp")}</a>
                       </div>
                     </div>
                   </div>
@@ -184,4 +147,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;

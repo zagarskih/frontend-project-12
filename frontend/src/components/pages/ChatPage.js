@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchChatData } from "./chatSlice";
-import ChannelsList from "./channels/ChannelsList";
-import ChatMessages from "./messages/ChatMessages";
-import ChatHeader from "../HeaderChat";
+import { fetchChatData } from "../../chatSlice";
+import ChannelsList from "../elements/channels/ChannelsList";
+import ChatMessages from "../elements/messages/ChatMessages"
+import ChatHeader from "../elements/HeaderChat";
 
 const ChatPage = () => {
   const dispatch = useDispatch();
@@ -48,6 +48,6 @@ const ChatPage = () => {
       </div>
     </div>
   );
-}
+};
 
 export default ChatPage;
