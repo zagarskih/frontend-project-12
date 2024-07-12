@@ -60,6 +60,7 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
             >
               <div role="group" className="d-flex show dropdown btn-group">
                 <button
+                  aria-label={channel.name}
                   type="button"
                   className={classNames(
                     "w-100",
@@ -70,7 +71,7 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
                     { "btn-secondary": channel.id === activeChannel }
                   )}
                 >
-                  <span className="visually-hidden">{channel.name}</span>
+                  <span className="visually-hidden">Имя канала</span>
                   <span className="me-1">#</span>
                   {channel.name}
                 </button>
