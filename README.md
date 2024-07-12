@@ -1,6 +1,8 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/zagarskih/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/zagarskih/frontend-project-12/actions)
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/7b4ae08545215cc5fdb3/maintainability)](https://codeclimate.com/github/zagarskih/frontend-project-12/maintainability)
+
 # Link
 https://frontend-project-12-luyw.onrender.com
 
