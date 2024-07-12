@@ -70,7 +70,7 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
                     { "btn-secondary": channel.id === activeChannel }
                   )}
                 >
-                  <span className="visually-hidden">Имя канала</span>
+                  <span className="visually-hidden">{channel.name}</span>
                   <span className="me-1">#</span>
                   {channel.name}
                 </button>
