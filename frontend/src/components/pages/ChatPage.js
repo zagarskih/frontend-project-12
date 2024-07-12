@@ -6,10 +6,10 @@ import ChatMessages from "../elements/messages/ChatMessages"
 import ChatHeader from "../elements/HeaderChat";
 
 const ChatPage = () => {
-  const dispatch = useDispatch();
-  const token = localStorage.getItem("token");
-  const loading = useSelector((state) => state.chat.loading);
-  const error = useSelector((state) => state.chat.error);
+  // const dispatch = useDispatch();
+  // const token = localStorage.getItem("token");
+  // const loading = useSelector((state) => state.chat.loading);
+  // const error = useSelector((state) => state.chat.error);
 
   const [activeChannel, setActiveChannel] = useState("1");
 
@@ -17,19 +17,19 @@ const ChatPage = () => {
     setActiveChannel(channel);
   };
 
-  useEffect(() => {
-    if (token) {
-      dispatch(fetchChatData(token));
-    }
-  }, [dispatch, token]);
+  // useEffect(() => {
+  //   if (token) {
+  //     dispatch(fetchChatData(token));
+  //   }
+  // }, [dispatch, token]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  // if (error) {
+  //   return <div>Error: {error}</div>;
+  // }
 
   return (
     <div className="d-flex flex-column h-100">
