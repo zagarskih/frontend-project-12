@@ -49,6 +49,7 @@ const SignUp = () => {
       .min(6, t("validation.passwordLength")),
     repeatPassword: yup
       .string()
+      .required(t("validation.notFilled"))
       .oneOf([yup.ref("password"), null], t("validation.notSamePassword")),
   });
 
