@@ -5,7 +5,7 @@ import ChatHeader from "../elements/HeaderChat";
 import * as yup from "yup";
 import { sighUpApi } from "../../api";
 import { useTranslation } from "react-i18next";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import AuthContext from "../../tokenContext";
 
 const SignUp = () => {
@@ -25,12 +25,12 @@ const SignUp = () => {
       navigate("/");
     } catch (error) {
       if (error.response.status === 409) {
-        setStatus({ error: t('errors.notUnique') });
+        setStatus({ error: t("errors.notUnique") });
       } else if (!error.isAxiosError) {
-        setStatus({ error: t('errors.signUp') });
-        toast.error(t('unknownError'));
+        setStatus({ error: t("errors.signUp") });
+        toast.error(t("unknownError"));
       } else {
-        toast.error(t('networkError'));
+        toast.error(t("networkError"));
       }
     } finally {
       setSubmitting(false);
@@ -162,9 +162,7 @@ const SignUp = () => {
                               <button
                                 type="submit"
                                 className="w-100 mb-3 btn btn-outline-primary"
-                                disabled={
-                                  isSubmitting || Object.keys(errors).length > 0
-                                }
+                                disabled={isSubmitting}
                               >
                                 {t("interface.signUpButton")}
                               </button>
