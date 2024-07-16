@@ -62,8 +62,7 @@ const NewMessageForm = ({ activeChannel }) => {
             className="border-0 p-0 ps-2 form-control"
             value={newMessage}
             onChange={handleInputChange}
-          >
-          </input>
+          />
           <button
             type="submit"
             disabled={isSubmiting}

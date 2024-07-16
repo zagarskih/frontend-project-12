@@ -109,8 +109,8 @@ const Login = () => {
                                   id={passwordId}
                                   className={`form-control ${
                                     errors.password && touched.password
-                                      ? "is-invalid"
-                                      : ""
+                                      ? 'is-invalid'
+                                      : ''
                                   }`}
                                   placeholder="Password"
                                 />
@@ -139,7 +139,7 @@ const Login = () => {
                       <div className="text-center">
                         <span>
                           {t('interface.noAcc')}
-                          </span>
+                        </span>
                         <a href="/signup">{t('interface.signUp')}</a>
                       </div>
                     </div>
@@ -148,7 +148,7 @@ const Login = () => {
               </div>
             </div>
           </div>
-          <div className="Toastify"></div>
+          <div className="Toastify"> </div>
         </div>
       </div>
     </div>

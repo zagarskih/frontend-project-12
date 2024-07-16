@@ -56,6 +56,11 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
             <li
               className="nav-item w-100"
               onClick={() => onChannelClick(channel.id)}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  onChannelClick(channel.id);
+                }
+              }}
               tabIndex={0}
               role="button"
               key={channel.id}

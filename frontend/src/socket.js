@@ -26,7 +26,7 @@ export default initSocket = () => {
 
   socket.on('editChannel', (payload) => {
     dispatch(
-      editChannel({ channelId: payload.channelId, newName: payload.newName, })
+      editChannel({ channelId: payload.channelId, newName: payload.newName }),
     );
   });
 

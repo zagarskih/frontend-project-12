@@ -95,6 +95,6 @@ export const {
   addMessage,
   addChannel,
   deleteChannel,
-  editChannel
+  editChannel,
 } = chatSlice.actions;
 export default chatSlice.reducer;

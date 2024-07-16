@@ -85,7 +85,7 @@ const AddChannelModal = ({ show, handleClose, setActiveChannel }) => {
             errors,
             handleChange,
             handleBlur,
-            isSubmitting
+            isSubmitting,
           }) => (
             <Form>
               <div>

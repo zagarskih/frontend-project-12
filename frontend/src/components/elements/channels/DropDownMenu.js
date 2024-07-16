@@ -91,24 +91,20 @@ const DropDownMenu = ({
       </button>
       <div
         ref={menuRef}
-        className={classNames("dropdown-menu", {
+        className={classNames('dropdown-menu', {
           show: showMenu && openMenuChannelId === channel.id,
         })}
       >
-        <a
+        <button
           onClick={(event) => {
-            event.stopPropagation();
-            event.preventDefault();
-            handleShowDeleteModal(channel.id);
+          event.stopPropagation();
+          handleShowDeleteModal(channel.id);
           }}
-          data-rr-ui-dropdown-item
-          role="button"
           className="dropdown-item"
-          tabIndex="0"
-          href="#"
+          tabIndex={0}
         >
           {t('interface.delete')}
-        </a>
+        </button>
         <DeleteChannelModal
           show={showDeleteModal}
           handleClose={handleCloseDeleteModal}
@@ -116,19 +112,16 @@ const DropDownMenu = ({
           channelId={channelToDelete}
           messages={messages}
         />
-        <a
+        <button
           onClick={(event) => {
-            event.preventDefault();
-            handleShowEditModal(channel.id);
+          event.preventDefault();
+          handleShowEditModal(channel.id);
           }}
-          data-rr-ui-dropdown-item
-          role="button"
           className="dropdown-item"
           tabIndex={0}
-          href="0"
         >
           {t('interface.edit')}
-        </a>
+        </button>
         <EditChannelModal
           show={showEditModal}
           handleClose={handleCloseEditModal}

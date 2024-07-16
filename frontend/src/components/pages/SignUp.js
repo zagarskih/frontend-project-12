@@ -91,7 +91,7 @@ const SignUp = () => {
                             isSubmitting,
                             errors,
                             touched,
-                            status
+                            status,
                           }) => (
                             <Form>
                               <h1 className="text-center mb-4">
@@ -148,8 +148,8 @@ const SignUp = () => {
                                   name="repeatPassword"
                                   id={repeatPasswordId}
                                   className={`form-control ${
-                                    errors.repeatPassword &&
-                                    touched.repeatPassword
+                                    errors.repeatPassword
+                                    && touched.repeatPassword
                                       ? 'is-invalid'
                                       : ''
                                   }`}
@@ -159,7 +159,7 @@ const SignUp = () => {
                                   {t('interface.repeatPassword')}
                                 </label>
                                 <div
-                                  placement="right"
+                                  // placement="right"
                                   className="invalid-tooltip"
                                 >
                                   {errors.repeatPassword}
@@ -187,7 +187,7 @@ const SignUp = () => {
               </div>
             </div>
           </div>
-          <div className="Toastify"></div>
+          <div className="Toastify"> </div>
         </div>
       </div>
     </div>
