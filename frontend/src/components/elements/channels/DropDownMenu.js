@@ -96,9 +96,10 @@ const DropDownMenu = ({
         })}
       >
         <button
+          type="button"
           onClick={(event) => {
-          event.stopPropagation();
-          handleShowDeleteModal(channel.id);
+            event.stopPropagation();
+            handleShowDeleteModal(channel.id);
           }}
           className="dropdown-item"
           tabIndex={0}
@@ -113,9 +114,10 @@ const DropDownMenu = ({
           messages={messages}
         />
         <button
+          type="button"
           onClick={(event) => {
-          event.preventDefault();
-          handleShowEditModal(channel.id);
+            event.preventDefault();
+            handleShowEditModal(channel.id);
           }}
           className="dropdown-item"
           tabIndex={0}

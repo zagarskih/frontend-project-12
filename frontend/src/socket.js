@@ -9,7 +9,7 @@ import {
 
 const { dispatch } = store;
 
-export default initSocket = () => {
+const initSocket = () => {
   const socket = io();
 
   socket.on('newMessage', (newMessage) => {
@@ -36,3 +36,5 @@ export default initSocket = () => {
 
   return socket;
 };
+
+export default initSocket;
