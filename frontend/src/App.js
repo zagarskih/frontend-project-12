@@ -4,7 +4,7 @@ import {
   Navigate,
   useLocation,
   createBrowserRouter,
-  RouterProvider
+  RouterProvider,
 } from "react-router-dom";
 import { Provider as ReduxProvider } from "react-redux";
 import { ToastContainer } from "react-toastify";
@@ -61,7 +61,11 @@ const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("token");
   console.log(!!token);
   const location = useLocation();
-  return !!token ? children : <Navigate to="/login" state={{ from: location }} />;
+  return !!token ? (
+    children
+  ) : (
+    <Navigate to="/login" state={{ from: location }} />
+  );
 };
 
 const router = createBrowserRouter([
@@ -122,10 +126,10 @@ const App = () => {
     <Provider config={rollbarConfig}>
       <ErrorBoundary>
         <ReduxProvider store={store}>
-            <AuthProvider>
-              <ToastContainer />
-              <RouterProvider router={router} />
-            </AuthProvider>
+          <AuthProvider>
+            <ToastContainer />
+            <RouterProvider router={router} />
+          </AuthProvider>
         </ReduxProvider>
       </ErrorBoundary>
     </Provider>

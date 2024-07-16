@@ -68,9 +68,9 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
                     "w-100",
                     "rounded-0",
                     "text-start",
-                    {"text-truncate": channel.removable === true},
+                    { "text-truncate": channel.removable === true },
                     "btn",
-                    {"btn-secondary": channel.id === activeChannel}
+                    { "btn-secondary": channel.id === activeChannel }
                   )}
                 >
                   <span className="me-1">#</span>

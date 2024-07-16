@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { deleteChannelApi, deleteMessagesByChannel } from "../../../api";
 import { useTranslation } from "react-i18next";
-import { toast } from 'react-toastify';
-import { io } from 'socket.io-client';
+import { toast } from "react-toastify";
+import { io } from "socket.io-client";
 
 const socket = io();
 
@@ -27,13 +27,13 @@ const DeleteChannelModal = ({
       await deleteMessagesByChannel(token, channelId, messages, t);
 
       const valueForSocket = { id: channelId };
-      socket.emit('removeChannel', valueForSocket);
+      socket.emit("removeChannel", valueForSocket);
 
-      toast.success(t('toast.deleteChannel'));
+      toast.success(t("toast.deleteChannel"));
       setActiveChannel("1");
     } catch (error) {
-      console.error(t('errors.deleting'), error);
-      toast.error(t('networkError'));
+      console.error(t("errors.deleting"), error);
+      toast.error(t("networkError"));
     } finally {
       setSubmitting(false);
     }

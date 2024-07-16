@@ -43,7 +43,7 @@ const chatSlice = createSlice({
     },
     deleteChannel: (state, action) => {
       const { id } = action.payload;
-      console.log(id)
+      console.log(id);
       state.channels = state.channels.filter((channel) => channel.id !== id);
     },
     editChannel: (state, action) => {
