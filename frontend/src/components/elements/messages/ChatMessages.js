@@ -10,7 +10,6 @@ const СhatMessages = ({ activeChannel }) => {
 
   const getMessagesByChannel = (messages, channel) => {
     return messages.filter((msg) => {
-      console.log("msg", msg);
       return msg.channelId === channel;
     });
   };
