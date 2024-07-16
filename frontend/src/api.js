@@ -1,5 +1,5 @@
-import axios from "axios";
-import API_ROUTES from "./apiRoutes";
+import axios from 'axios';
+import API_ROUTES from './apiRoutes';
 
 export const sendMessageApi = async (token, newMessage, t) => {
   try {
@@ -10,7 +10,7 @@ export const sendMessageApi = async (token, newMessage, t) => {
     });
     return response.data;
   } catch (error) {
-    console.error(t("errorsApi.sending"), error);
+    console.error(t('errorsApi.sending'), error);
     throw error;
   }
 };
@@ -24,7 +24,7 @@ export const addChannelApi = async (token, newChannel, t) => {
     });
     return response.data;
   } catch (error) {
-    console.error(t("errorsApi.creatingChannel"), error);
+    console.error(t('errorsApi.creatingChannel'), error);
     throw error;
   }
 };
@@ -38,7 +38,7 @@ export const deleteChannelApi = async (token, channelId, t) => {
     });
     return response.data;
   } catch (error) {
-    console.error(t("errorsApi.deleting"), error);
+    console.error(t('errorsApi.deleting'), error);
     throw error;
   }
 };
@@ -61,7 +61,7 @@ export const deleteMessagesByChannel = async (
       });
     }
   } catch (error) {
-    console.error(t("errorsApi.deletingMessages"), error);
+    console.error(t('errorsApi.deletingMessages'), error);
     throw error;
   }
 };
@@ -75,7 +75,7 @@ export const editChannelApi = async (token, newName, channelId, t) => {
       },
     });
   } catch (error) {
-    console.error(t("errorsApi.editing"), error);
+    console.error(t('errorsApi.editing'), error);
     throw error;
   }
 };
@@ -88,7 +88,7 @@ export const sighUpApi = async (username, password, t) => {
     });
     return response.data;
   } catch (error) {
-    console.error(t("errorsApi.signUp"), error);
+    console.error(t('errorsApi.signUp'), error);
     throw error;
   }
 };
@@ -101,7 +101,7 @@ export const logInApi = async (username, password, t) => {
     });
     return response.data;
   } catch (error) {
-    console.error(t("errorsApi.signIn"), error);
+    console.error(t('errorsApi.signIn'), error);
     throw error;
   }
 };

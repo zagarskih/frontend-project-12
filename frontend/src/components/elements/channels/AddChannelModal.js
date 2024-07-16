@@ -1,13 +1,13 @@
-import React from "react";
-import { Modal, Button } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as yup from "yup";
-import { addChannelApi } from "../../../api";
-import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
-import { io } from "socket.io-client";
-import filter from "leo-profanity";
+import React from 'react';
+import { Modal, Button } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as yup from 'yup';
+import { addChannelApi } from '../../../api';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import { io } from 'socket.io-client';
+import filter from 'leo-profanity';
 
 const socket = io();
 
@@ -15,7 +15,7 @@ const AddChannelModal = ({ show, handleClose, setActiveChannel }) => {
   const { t } = useTranslation();
 
   const initialValues = {
-    inputField: "",
+    inputField: '',
   };
 
   const channels = useSelector((state) => state.chat.channels);
@@ -24,32 +24,32 @@ const AddChannelModal = ({ show, handleClose, setActiveChannel }) => {
   const validationSchema = yup.object({
     inputField: yup
       .string()
-      .required(t("validation.notFilled"))
-      .min(3, t("validation.wrongLength"))
-      .max(20, t("validation.wrongLength"))
+      .required(t('validation.notFilled'))
+      .min(3, t('validation.wrongLength'))
+      .max(20, t('validation.wrongLength'))
       .test(
-        "unique-name",
-        t("validation.notUnique"),
+        'unique-name',
+        t('validation.notUnique'),
         (value) => !allChannelsNames.includes(value)
       ),
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     const newChannel = { name: filter.clean(values.inputField) };
 
     try {
       setSubmitting(true);
       const createdChannel = await addChannelApi(token, newChannel, t);
       console.log(createdChannel);
-      socket.emit("newChannel", createdChannel);
+      socket.emit('newChannel', createdChannel);
       setActiveChannel(createdChannel.id);
-      toast.success(t("toast.addChannel"));
+      toast.success(t('toast.addChannel'));
       resetForm();
       handleClose();
     } catch (error) {
-      console.error(t("errors.creatingChannel"), error);
-      toast.error(t("networkError"));
+      console.error(t('errors.creatingChannel'), error);
+      toast.error(t('networkError'));
     } finally {
       setSubmitting(false);
     }
@@ -59,12 +59,12 @@ const AddChannelModal = ({ show, handleClose, setActiveChannel }) => {
     <Modal
       show={show}
       onHide={handleClose}
-      aria-labelledby="contained-modal-title-vcenter"
+      aria-labelledby='contained-modal-title-vcenter'
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          {t("interface.addTitle")}
+        <Modal.Title id='contained-modal-title-vcenter'>
+          {t('interface.addTitle')}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -79,45 +79,45 @@ const AddChannelModal = ({ show, handleClose, setActiveChannel }) => {
             <Form>
               <div>
                 <label
-                  className="form-label visually-hidden"
-                  htmlFor="inputAddChannel"
+                  className='form-label visually-hidden'
+                  htmlFor='inputAddChannel'
                 >
-                  {t("interface.channelName")}
+                  {t('interface.channelName')}
                 </label>
                 <Field
-                  type="text"
-                  id="inputAddChannel"
-                  name="inputField"
-                  placeholder=""
+                  type='text'
+                  id='inputAddChannel'
+                  name='inputField'
+                  placeholder=''
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.inputField}
                   autoFocus
                   className={`form-control ${
-                    errors.inputField ? "is-invalid" : ""
+                    errors.inputField ? 'is-invalid' : ''
                   }`}
                 />
                 <ErrorMessage
-                  name="inputField"
-                  component="div"
-                  className="invalid-feedback"
+                  name='inputField'
+                  component='div'
+                  className='invalid-feedback'
                 />
               </div>
-              <div className="d-flex justify-content-end">
+              <div className='d-flex justify-content-end'>
                 <Button
-                  variant="secondary"
+                  variant='secondary'
                   onClick={handleClose}
-                  className="mt-3"
+                  className='mt-3'
                 >
-                  {t("interface.cancel")}
+                  {t('interface.cancel')}
                 </Button>
                 <Button
-                  variant="primary"
-                  type="submit"
+                  variant='primary'
+                  type='submit'
                   disabled={isSubmitting}
-                  className="mt-3 ms-2"
+                  className='mt-3 ms-2'
                 >
-                  {t("interface.add")}
+                  {t('interface.add')}
                 </Button>
               </div>
             </Form>

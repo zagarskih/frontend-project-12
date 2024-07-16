@@ -1,46 +1,46 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   Navigate,
   useLocation,
   createBrowserRouter,
   RouterProvider,
-} from "react-router-dom";
-import { Provider as ReduxProvider } from "react-redux";
-import { ToastContainer } from "react-toastify";
-import AuthContext from "./tokenContext.js";
-import { Provider, ErrorBoundary } from "@rollbar/react";
-import { io } from "socket.io-client";
-import store from "./store.js";
-import ErrorPage from "./components/pages/ErrorPage.js";
-import Login from "./components/pages/LogIn.js";
-import SignUp from "./components/pages/SignUp.js";
-import ChatPage from "./components/pages/ChatPage.js";
+} from 'react-router-dom';
+import { Provider as ReduxProvider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import { Provider, ErrorBoundary } from '@rollbar/react';
+import { io } from 'socket.io-client';
+import AuthContext from './tokenContext.js';
+import store from './store.js';
+import ErrorPage from './components/pages/ErrorPage.js';
+import Login from './components/pages/LogIn.js';
+import SignUp from './components/pages/SignUp.js';
+import ChatPage from './components/pages/ChatPage.js';
 import {
   addMessage,
   addChannel,
   deleteChannel,
   editChannel,
-} from "./chatSlice.js";
-import "react-toastify/dist/ReactToastify.css";
+} from './chatSlice.js';
+import 'react-toastify/dist/ReactToastify.css';
 
 const socket = io();
 
 const AuthProvider = ({ children }) => {
-  const currentUser = JSON.parse(localStorage.getItem("user"));
+  const currentUser = JSON.parse(localStorage.getItem('user'));
   const [user, setUser] = useState(
     currentUser ? { username: currentUser.username } : null
   );
 
   const logIn = (userData) => {
-    localStorage.setItem("token", userData.token);
-    localStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem('token', userData.token);
+    localStorage.setItem('user', JSON.stringify(userData));
     setUser({ username: userData.username });
   };
 
   const logOut = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     setUser(null);
   };
 
@@ -58,19 +58,19 @@ const AuthProvider = ({ children }) => {
 };
 
 const ProtectedRoute = ({ children }) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   console.log(!!token);
   const location = useLocation();
   return !!token ? (
     children
   ) : (
-    <Navigate to="/login" state={{ from: location }} />
+    <Navigate to='/login' state={{ from: location }} />
   );
 };
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: (
       <ProtectedRoute>
         <ChatPage />
@@ -79,11 +79,11 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/login",
+    path: '/login',
     element: <Login />,
   },
   {
-    path: "/signup",
+    path: '/signup',
     element: <SignUp />,
   },
 ]);
@@ -92,34 +92,34 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    socket.on("newMessage", (payload) => {
+    socket.on('newMessage', (payload) => {
       dispatch(addMessage(payload));
     });
 
-    socket.on("newChannel", (payload) => {
+    socket.on('newChannel', (payload) => {
       dispatch(addChannel(payload));
     });
 
-    socket.on("removeChannel", (payload) => {
+    socket.on('removeChannel', (payload) => {
       dispatch(deleteChannel(payload));
       // dispatch(deleteChannelMessages(channel));
     });
 
-    socket.on("renameChannel", (payload) => {
+    socket.on('renameChannel', (payload) => {
       dispatch(editChannel(payload));
     });
 
     return () => {
-      socket.off("newMessage");
-      socket.off("newChannel");
-      socket.off("removeChannel");
-      socket.off("renameChannel");
+      socket.off('newMessage');
+      socket.off('newChannel');
+      socket.off('removeChannel');
+      socket.off('renameChannel');
     };
   }, [dispatch]);
 
   const rollbarConfig = {
-    accessToken: "3a0fbeb3dce14e78b4ff4ed823304ddb",
-    environment: "testenv",
+    accessToken: '3a0fbeb3dce14e78b4ff4ed823304ddb',
+    environment: 'testenv',
   };
 
   return (

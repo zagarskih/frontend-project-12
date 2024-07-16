@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { createPopper } from "@popperjs/core";
-import { useTranslation } from "react-i18next";
-import classNames from "classnames";
-import DeleteChannelModal from "./DeleteChannelModal";
-import EditChannelModal from "./EditChannelModal";
+import React, { useState, useRef, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { createPopper } from '@popperjs/core';
+import { useTranslation } from 'react-i18next';
+import classNames from 'classnames';
+import DeleteChannelModal from './DeleteChannelModal';
+import EditChannelModal from './EditChannelModal';
 
 const DropDownMenu = ({
   showMenu,
@@ -61,7 +61,7 @@ const DropDownMenu = ({
   useEffect(() => {
     if (showMenu && openMenuChannelId === channel.id) {
       createPopper(buttonRef.current, menuRef.current, {
-        placement: "bottom-start",
+        placement: 'bottom-start',
       });
     }
   }, [showMenu, openMenuChannelId, channel.id]);
@@ -71,25 +71,25 @@ const DropDownMenu = ({
       <button
         ref={buttonRef}
         onClick={handleButtonClick}
-        type="button"
+        type='button'
         aria-expanded={showMenu && openMenuChannelId === channel.id}
         className={classNames(
-          "flex-grow-0",
-          "dropdown-toggle",
-          "dropdown-toggle-split",
-          "btn",
-          { "btn-secondary": channel.id === activeChannel },
+          'flex-grow-0',
+          'dropdown-toggle',
+          'dropdown-toggle-split',
+          'btn',
+          { 'btn-secondary': channel.id === activeChannel },
           {
-            "btn-outline-secondary":
+            'btn-outline-secondary':
               showMenu && openMenuChannelId === channel.id,
           }
         )}
       >
-        <span className="visually-hidden">{t("interface.menuSpan")}</span>
+        <span className='visually-hidden'>{t('interface.menuSpan')}</span>
       </button>
       <div
         ref={menuRef}
-        className={classNames("dropdown-menu", {
+        className={classNames('dropdown-menu', {
           show: showMenu && openMenuChannelId === channel.id,
         })}
       >
@@ -100,12 +100,12 @@ const DropDownMenu = ({
             handleShowDeleteModal(channel.id);
           }}
           data-rr-ui-dropdown-item
-          role="button"
-          className="dropdown-item"
-          tabIndex="0"
-          href="#"
+          role='button'
+          className='dropdown-item'
+          tabIndex='0'
+          href='#'
         >
-          {t("interface.delete")}
+          {t('interface.delete')}
         </a>
         <DeleteChannelModal
           show={showDeleteModal}
@@ -120,12 +120,12 @@ const DropDownMenu = ({
             handleShowEditModal(channel.id);
           }}
           data-rr-ui-dropdown-item
-          role="button"
-          className="dropdown-item"
-          tab-index="0"
-          href="#"
+          role='button'
+          className='dropdown-item'
+          tab-index='0'
+          href='#'
         >
-          {t("interface.edit")}
+          {t('interface.edit')}
         </a>
         <EditChannelModal
           show={showEditModal}

@@ -1,9 +1,9 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import API_ROUTES from "./apiRoutes";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+import API_ROUTES from './apiRoutes';
 
 export const fetchChatData = createAsyncThunk(
-  "chat/fetchChannelsAndMessages",
+  'chat/fetchChannelsAndMessages',
   async (token, { rejectWithValue }) => {
     try {
       const channelsResponse = await axios.get(API_ROUTES.channels.base(), {
@@ -27,7 +27,7 @@ export const fetchChatData = createAsyncThunk(
 );
 
 const chatSlice = createSlice({
-  name: "chat",
+  name: 'chat',
   initialState: {
     channels: [],
     messages: [],

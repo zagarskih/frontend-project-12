@@ -1,17 +1,17 @@
-import React, { useState, useContext } from "react";
-import { sendMessageApi } from "../../../api";
-import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
-import AuthContext from "../../../tokenContext";
-import filter from "leo-profanity";
-import { io } from "socket.io-client";
+import React, { useState, useContext } from 'react';
+import { sendMessageApi } from '../../../api';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import AuthContext from '../../../tokenContext';
+import filter from 'leo-profanity';
+import { io } from 'socket.io-client';
 
 const socket = io();
 
 const NewMessageForm = ({ activeChannel }) => {
   const { t } = useTranslation();
   const { user } = useContext(AuthContext);
-  const [newMessage, setNewMessage] = useState("");
+  const [newMessage, setNewMessage] = useState('');
   const [isSubmiting, setSubmitting] = useState(false);
 
   const handleInputChange = (e) => {
@@ -21,9 +21,9 @@ const NewMessageForm = ({ activeChannel }) => {
   const handleSendMessage = async (e) => {
     e.preventDefault();
 
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (!token) {
-      console.error("Токен отсутствует.");
+      console.error('Токен отсутствует.');
       return;
     }
 
@@ -37,38 +37,38 @@ const NewMessageForm = ({ activeChannel }) => {
     try {
       setSubmitting(true);
       await sendMessageApi(token, message, t);
-      socket.emit("newMessage", message);
-      setNewMessage("");
+      socket.emit('newMessage', message);
+      setNewMessage('');
     } catch (error) {
-      console.error(t("errors.sending"), error);
-      toast.error(t("networkError"));
+      console.error(t('errors.sending'), error);
+      toast.error(t('networkError'));
     } finally {
       setSubmitting(false);
     }
   };
 
   return (
-    <div className="mt-auto px-5 py-3">
+    <div className='mt-auto px-5 py-3'>
       <form
         noValidate
-        className="py-1 border rounded-2"
+        className='py-1 border rounded-2'
         onSubmit={handleSendMessage}
       >
-        <div className="input-group">
+        <div className='input-group'>
           <input
-            name="body"
-            aria-label="Новое сообщение"
-            placeholder="Введите сообщение..."
-            className="border-0 p-0 ps-2 form-control"
+            name='body'
+            aria-label='Новое сообщение'
+            placeholder='Введите сообщение...'
+            className='border-0 p-0 ps-2 form-control'
             value={newMessage}
             onChange={handleInputChange}
           ></input>
           <button
-            type="submit"
+            type='submit'
             disabled={isSubmiting}
-            className="btn btn-group-vertical"
+            className='btn btn-group-vertical'
           >
-            {t("interface.send")}
+            {t('interface.send')}
           </button>
         </div>
       </form>

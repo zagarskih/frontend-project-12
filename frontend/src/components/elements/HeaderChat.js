@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import AuthContext from "../../tokenContext";
+import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import AuthContext from '../../tokenContext';
 
 const ChatHeader = () => {
   const { t } = useTranslation();
@@ -10,22 +10,22 @@ const ChatHeader = () => {
 
   const handleLogout = () => {
     logOut();
-    navigate("/login");
+    navigate('/login');
   };
 
   return (
-    <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
-      <div className="container">
-        <a className="navbar-brand" href="/">
+    <nav className='shadow-sm navbar navbar-expand-lg navbar-light bg-white'>
+      <div className='container'>
+        <a className='navbar-brand' href='/'>
           Hexlet Chat
         </a>
         {!!user && (
           <button
             onClick={handleLogout}
-            type="button"
-            className="btn btn-primary"
+            type='button'
+            className='btn btn-primary'
           >
-            {t("interface.logOut")}
+            {t('interface.logOut')}
           </button>
         )}
       </div>

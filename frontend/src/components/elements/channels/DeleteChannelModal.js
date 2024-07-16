@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Modal, Button } from "react-bootstrap";
-import { deleteChannelApi, deleteMessagesByChannel } from "../../../api";
-import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
-import { io } from "socket.io-client";
+import React, { useState } from 'react';
+import { Modal, Button } from 'react-bootstrap';
+import { deleteChannelApi, deleteMessagesByChannel } from '../../../api';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import { io } from 'socket.io-client';
 
 const socket = io();
 
@@ -19,7 +19,7 @@ const DeleteChannelModal = ({
   const [submitting, setSubmitting] = useState(false);
 
   const handleDelete = async () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
 
     try {
       setSubmitting(true);
@@ -27,13 +27,13 @@ const DeleteChannelModal = ({
       await deleteMessagesByChannel(token, channelId, messages, t);
 
       const valueForSocket = { id: channelId };
-      socket.emit("removeChannel", valueForSocket);
+      socket.emit('removeChannel', valueForSocket);
 
-      toast.success(t("toast.deleteChannel"));
-      setActiveChannel("1");
+      toast.success(t('toast.deleteChannel'));
+      setActiveChannel('1');
     } catch (error) {
-      console.error(t("errors.deleting"), error);
-      toast.error(t("networkError"));
+      console.error(t('errors.deleting'), error);
+      toast.error(t('networkError'));
     } finally {
       setSubmitting(false);
     }
@@ -49,23 +49,23 @@ const DeleteChannelModal = ({
       show={show}
       onHide={handleClose}
       centered
-      aria-labelledby="contained-modal-title-vcenter"
+      aria-labelledby='contained-modal-title-vcenter'
     >
       <Modal.Header closeButton>
-        <Modal.Title>{t("interface.deleteTitle")}</Modal.Title>
+        <Modal.Title>{t('interface.deleteTitle')}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{t("interface.deleteBody")}</Modal.Body>
+      <Modal.Body>{t('interface.deleteBody')}</Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          {t("interface.cancel")}
+        <Button variant='secondary' onClick={handleClose}>
+          {t('interface.cancel')}
         </Button>
         <Button
-          className="btn-danger"
-          variant="primary"
+          className='btn-danger'
+          variant='primary'
           disabled={submitting}
           onClick={combinedClickHandler}
         >
-          {t("interface.delete")}
+          {t('interface.delete')}
         </Button>
       </Modal.Footer>
     </Modal>

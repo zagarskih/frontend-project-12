@@ -1,12 +1,12 @@
-import React, { useContext, useId } from "react";
-import { useNavigate } from "react-router-dom";
-import { Formik, Form, Field } from "formik";
-import { logInApi } from "../../api";
-import ChatHeader from "../elements/HeaderChat";
-import * as yup from "yup";
-import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
-import AuthContext from "../../tokenContext";
+import React, { useContext, useId } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Formik, Form, Field } from 'formik';
+import { logInApi } from '../../api';
+import ChatHeader from '../elements/HeaderChat';
+import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import AuthContext from '../../tokenContext';
 
 const Login = () => {
   const { t } = useTranslation();
@@ -24,16 +24,16 @@ const Login = () => {
       const response = await logInApi(username, password, t);
       logIn(response);
       const token = response.token;
-      localStorage.setItem("token", token);
-      navigate("/");
+      localStorage.setItem('token', token);
+      navigate('/');
     } catch (error) {
       if (error.response.status === 401) {
-        setStatus({ error: t("errors.wrongLoginPassword") });
+        setStatus({ error: t('errors.wrongLoginPassword') });
       } else if (!error.isAxiosError) {
-        toast.error(t("unknownError"));
+        toast.error(t('unknownError'));
         return;
       } else {
-        toast.error(t("networkError"));
+        toast.error(t('networkError'));
       }
     } finally {
       setSubmitting(false);
@@ -41,34 +41,34 @@ const Login = () => {
   };
 
   const validationSchema = yup.object({
-    username: yup.string().required(t("validation.notFilled")),
-    password: yup.string().required(t("validation.notFilled")),
+    username: yup.string().required(t('validation.notFilled')),
+    password: yup.string().required(t('validation.notFilled')),
   });
 
   const initialValues = {
-    username: "",
-    password: "",
+    username: '',
+    password: '',
   };
 
   return (
-    <div className="h-100 bg-light">
-      <div className="h-100">
-        <div className="h-100" id="chat">
-          <div className="d-flex flex-column h-100">
+    <div className='h-100 bg-light'>
+      <div className='h-100'>
+        <div className='h-100' id='chat'>
+          <div className='d-flex flex-column h-100'>
             <ChatHeader />
-            <div className="container-fluid h-100">
-              <div className="row justify-content-center align-content-center h-100">
-                <div className="col-12 col-md-8 col-xxl-6">
-                  <div className="card shadow-sm">
-                    <div className="card-body row p-5">
-                      <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
+            <div className='container-fluid h-100'>
+              <div className='row justify-content-center align-content-center h-100'>
+                <div className='col-12 col-md-8 col-xxl-6'>
+                  <div className='card shadow-sm'>
+                    <div className='card-body row p-5'>
+                      <div className='col-12 col-md-6 d-flex align-items-center justify-content-center'>
                         <img
-                          src="/login.png"
-                          className="img-fluid"
-                          alt="Войти"
+                          src='/login.png'
+                          className='img-fluid'
+                          alt='Войти'
                         />
                       </div>
-                      <div className="col-12 col-md-6 mt-3 mt-mb-0">
+                      <div className='col-12 col-md-6 mt-3 mt-mb-0'>
                         <Formik
                           initialValues={initialValues}
                           validationSchema={validationSchema}
@@ -78,64 +78,64 @@ const Login = () => {
                         >
                           {({ isSubmitting, errors, touched, status }) => (
                             <Form>
-                              <h1 className="text-center mb-4">
-                                {t("interface.signIn")}
+                              <h1 className='text-center mb-4'>
+                                {t('interface.signIn')}
                               </h1>
-                              <div className="form-floating mb-3">
+                              <div className='form-floating mb-3'>
                                 <Field
-                                  type="text"
-                                  name="username"
+                                  type='text'
+                                  name='username'
                                   id={usernameId}
                                   className={`form-control ${
                                     errors.username && touched.username
-                                      ? "is-invalid"
-                                      : ""
+                                      ? 'is-invalid'
+                                      : ''
                                   }`}
-                                  placeholder="Username"
+                                  placeholder='Username'
                                   autoFocus
                                 />
                                 <label htmlFor={usernameId}>
-                                  {t("interface.nickname")}
+                                  {t('interface.nickname')}
                                 </label>
                               </div>
-                              <div className="form-floating mb-4">
+                              <div className='form-floating mb-4'>
                                 <Field
-                                  type="password"
-                                  name="password"
+                                  type='password'
+                                  name='password'
                                   id={passwordId}
                                   className={`form-control ${
                                     errors.password && touched.password
-                                      ? "is-invalid"
-                                      : ""
+                                      ? 'is-invalid'
+                                      : ''
                                   }`}
-                                  placeholder="Password"
+                                  placeholder='Password'
                                 />
                                 <label htmlFor={passwordId}>
-                                  {t("interface.password")}
+                                  {t('interface.password')}
                                 </label>
                                 {status && status.error && (
-                                  <div className="alert alert-danger mt-2">
+                                  <div className='alert alert-danger mt-2'>
                                     {status.error}
                                   </div>
                                 )}
                                 {/* {(errors.username || errors.password) && (<div className="alert alert-danger">Пожалуйста, введите логин и пароль</div>)} */}
                               </div>
                               <button
-                                type="submit"
-                                className="w-100 mb-3 btn btn-outline-primary"
+                                type='submit'
+                                className='w-100 mb-3 btn btn-outline-primary'
                                 disabled={isSubmitting}
                               >
-                                {t("interface.signIn")}
+                                {t('interface.signIn')}
                               </button>
                             </Form>
                           )}
                         </Formik>
                       </div>
                     </div>
-                    <div className="card-footer p-4">
-                      <div className="text-center">
-                        <span>{t("interface.noAcc")} </span>
-                        <a href="/signup">{t("interface.signUp")}</a>
+                    <div className='card-footer p-4'>
+                      <div className='text-center'>
+                        <span>{t('interface.noAcc')} </span>
+                        <a href='/signup'>{t('interface.signUp')}</a>
                       </div>
                     </div>
                   </div>
@@ -143,7 +143,7 @@ const Login = () => {
               </div>
             </div>
           </div>
-          <div className="Toastify"></div>
+          <div className='Toastify'></div>
         </div>
       </div>
     </div>
