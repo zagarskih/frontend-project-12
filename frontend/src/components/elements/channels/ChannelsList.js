@@ -62,7 +62,7 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
                 }
               }}
               tabIndex={0}
-              // role="button"
+              role="button"
               key={channel.id}
             >
               <div role="group" className="d-flex show dropdown btn-group">
