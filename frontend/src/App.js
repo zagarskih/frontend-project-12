@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState, useMemo } from 'react';
+// import { useDispatch } from 'react-redux';
 import {
   Navigate,
   useLocation,
   createBrowserRouter,
   RouterProvider,
 } from 'react-router-dom';
-import { Provider as ReduxProvider } from 'react-redux';
+import { Provider as ReduxProvider, useDispatch } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { Provider, ErrorBoundary } from '@rollbar/react';
 import { io } from 'socket.io-client';
@@ -29,7 +29,7 @@ const socket = io();
 const AuthProvider = ({ children }) => {
   const currentUser = JSON.parse(localStorage.getItem('user'));
   const [user, setUser] = useState(
-    currentUser ? { username: currentUser.username } : null
+    currentUser ? { username: currentUser.username } : null,
   );
 
   const logIn = (userData) => {
@@ -44,16 +44,17 @@ const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  const authValue = useMemo(
+    () => ({
+      logIn,
+      logOut,
+      user,
+    }),
+    [logIn, logOut, user]
+  );
+
   return (
-    <AuthContext.Provider
-      value={{
-        logIn,
-        logOut,
-        user,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>
   );
 };
 
@@ -61,10 +62,10 @@ const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('token');
   console.log(!!token);
   const location = useLocation();
-  return !!token ? (
+  return token ? ( //delete !!
     children
   ) : (
-    <Navigate to='/login' state={{ from: location }} />
+    <Navigate to="/login" state={{ from: location }} />
   );
 };
 

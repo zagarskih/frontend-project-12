@@ -47,19 +47,19 @@ export const deleteMessagesByChannel = async (
   token,
   channelId,
   messages,
-  t
+  t,
 ) => {
   try {
     const messagesIds = messages
       .filter((message) => message.channelId === channelId)
       .map((message) => message.id);
-    for (const id of messagesIds) {
+    messagesIds.forEach(async (id) => {
       await axios.delete(API_ROUTES.messages.byId(id), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-    }
+    });
   } catch (error) {
     console.error(t('errorsApi.deletingMessages'), error);
     throw error;

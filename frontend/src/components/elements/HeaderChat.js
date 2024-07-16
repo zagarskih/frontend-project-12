@@ -10,20 +10,20 @@ const ChatHeader = () => {
 
   const handleLogout = () => {
     logOut();
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
-    <nav className='shadow-sm navbar navbar-expand-lg navbar-light bg-white'>
-      <div className='container'>
-        <a className='navbar-brand' href='/'>
+    <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
+      <div className="container">
+        <a className="navbar-brand" href="/">
           Hexlet Chat
         </a>
         {!!user && (
           <button
             onClick={handleLogout}
-            type='button'
-            className='btn btn-primary'
+            type="button"
+            className="btn btn-primary"
           >
             {t('interface.logOut')}
           </button>

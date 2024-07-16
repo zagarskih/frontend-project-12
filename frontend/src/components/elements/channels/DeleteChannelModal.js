@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { deleteChannelApi, deleteMessagesByChannel } from '../../../api';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { io } from 'socket.io-client';
+import { deleteChannelApi, deleteMessagesByChannel } from '../../../api';
 
 const socket = io();
 
@@ -49,19 +49,19 @@ const DeleteChannelModal = ({
       show={show}
       onHide={handleClose}
       centered
-      aria-labelledby='contained-modal-title-vcenter'
+      aria-labelledby="contained-modal-title-vcenter"
     >
       <Modal.Header closeButton>
         <Modal.Title>{t('interface.deleteTitle')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>{t('interface.deleteBody')}</Modal.Body>
       <Modal.Footer>
-        <Button variant='secondary' onClick={handleClose}>
+        <Button variant="secondary" onClick={handleClose}>
           {t('interface.cancel')}
         </Button>
         <Button
-          className='btn-danger'
-          variant='primary'
+          className="btn-danger"
+          variant="primary"
           disabled={submitting}
           onClick={combinedClickHandler}
         >

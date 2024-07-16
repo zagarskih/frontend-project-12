@@ -23,7 +23,7 @@ export const fetchChatData = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
-  }
+  },
 );
 
 const chatSlice = createSlice({
@@ -43,38 +43,59 @@ const chatSlice = createSlice({
     },
     deleteChannel: (state, action) => {
       const { id } = action.payload;
-      console.log(id);
-      state.channels = state.channels.filter((channel) => channel.id !== id);
+      const updatedChannels = state.channels.filter((channel) => channel.id !== id);
+      return {
+        ...state,
+        channels: updatedChannels
+    };
     },
     editChannel: (state, action) => {
       const { id, name } = action.payload;
       const channelIndex = state.channels.findIndex(
-        (channel) => channel.id === id
+        (channel) => channel.id === id,
       );
-      if (channelIndex !== -1) {
-        state.channels[channelIndex].name = name;
-      }
+      const updatedChannel = {
+        ...state.channels[channelIndex],
+        name: name,
+      };
+      const updatedChannels = [
+        ...state.channels.slice(0, channelIndex),
+        updatedChannel,
+        ...state.channels.slice(channelIndex + 1),
+      ];
+      return {
+        ...state,
+        channels: updatedChannels,
+      };
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchChatData.pending, (state) => {
-        state.loading = true;
-        state.error = null;
+        return {
+          ...state,
+          loading: true,
+          error: null,
+        };
       })
       .addCase(fetchChatData.fulfilled, (state, action) => {
-        state.channels = action.payload.channels;
-        state.messages = action.payload.messages;
-        state.loading = false;
+        return {
+          ...state,
+          channels: action.payload.channels,
+          messages: action.payload.messages,
+          loading: false,
+          error: null,
+        };
       })
       .addCase(fetchChatData.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
+        return {
+          ...state,
+          loading: false,
+          error: action.error.message,
+        };
       });
   },
 });
 
-export const { addMessage, addChannel, deleteChannel, editChannel } =
-  chatSlice.actions;
-
+export const { addMessage, addChannel, deleteChannel, editChannel } = chatSlice.actions;
 export default chatSlice.reducer;

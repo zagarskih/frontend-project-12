@@ -1,7 +1,12 @@
 import { Modal, Button } from 'react-bootstrap';
 import React, { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import {
+  Formik,
+  Form,
+  Field,
+  ErrorMessage
+} from 'formik';
 import * as yup from 'yup';
 import { editChannelApi } from '../../../api';
 import { useTranslation } from 'react-i18next';
@@ -32,7 +37,7 @@ const EditChannelModal = ({ show, handleClose, channelId }) => {
       .test(
         'unique-name',
         t('validation.notUnique'),
-        (value) => !allChannelsNames.includes(value)
+        (value) => !allChannelsNames.includes(value),
       ),
   });
 
@@ -45,7 +50,7 @@ const EditChannelModal = ({ show, handleClose, channelId }) => {
       await editChannelApi(token, newName, channelId, t);
 
       const valuesForSocket = { id: channelId, name: newName };
-      socket.emit('renameChannel', valuesForSocket);
+      socket.emit("renameChannel", valuesForSocket);
 
       toast.success(t('toast.editChannel'));
       resetForm();
@@ -71,11 +76,11 @@ const EditChannelModal = ({ show, handleClose, channelId }) => {
     <Modal
       show={show}
       onHide={handleClose}
-      aria-labelledby='contained-modal-title-vcenter'
+      aria-labelledby="contained-modal-title-vcenter"
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id='contained-modal-title-vcenter'>
+        <Modal.Title id="contained-modal-title-vcenter">
           {t('interface.editTitle')}
         </Modal.Title>
       </Modal.Header>
@@ -91,44 +96,44 @@ const EditChannelModal = ({ show, handleClose, channelId }) => {
             <Form>
               <div>
                 <label
-                  className='form-label visually-hidden'
-                  htmlFor='inputEditChannel'
+                  className="form-label visually-hidden"
+                  htmlFor="inputEditChannel"
                 >
                   {t('interface.channelName')}
                 </label>
                 <Field
-                  type='text'
-                  id='inputEditChannel'
-                  name='inputField'
-                  placeholder=''
+                  type="text"
+                  id="inputEditChannel"
+                  name="inputField"
+                  placeholder=""
                   innerRef={inputRef}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.inputField}
                   autoFocus
                   className={`form-control ${
-                    errors.inputField ? 'is-invalid' : ''
+                    errors.inputField ? "is-invalid" : ""
                   }`}
                 />
                 <ErrorMessage
-                  name='inputField'
-                  component='div'
-                  className='invalid-feedback'
+                  name="inputField"
+                  component="div"
+                  className="invalid-feedback"
                 />
               </div>
-              <div className='d-flex justify-content-end'>
+              <div className="d-flex justify-content-end">
                 <Button
-                  variant='secondary'
+                  variant="secondary"
                   onClick={handleClose}
-                  className='mt-3'
+                  className="mt-3"
                 >
                   {t('interface.cancel')}
                 </Button>
                 <Button
-                  variant='primary'
-                  type='submit'
+                  variant="primary"
+                  type="submit"
                   disabled={isSubmitting}
-                  className='mt-3 ms-2'
+                  className="mt-3 ms-2"
                 >
                   {t('interface.send')}
                 </Button>

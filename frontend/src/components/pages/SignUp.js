@@ -64,24 +64,24 @@ const SignUp = () => {
   };
 
   return (
-    <div className='h-100 bg-light'>
-      <div className='h-100'>
-        <div className='h-100' id='chat'>
-          <div className='d-flex flex-column h-100'>
+    <div className="h-100 bg-light">
+      <div className="h-100">
+        <div className="h-100" id="chat">
+          <div className="d-flex flex-column h-100">
             <ChatHeader />
-            <div className='container-fluid h-100'>
-              <div className='row justify-content-center align-content-center h-100'>
-                <div className='col-12 col-md-8 col-xxl-6'>
-                  <div className='card shadow-sm'>
-                    <div className='card-body row p-5'>
-                      <div className='col-12 col-md-6 d-flex align-items-center justify-content-center'>
+            <div className="container-fluid h-100">
+              <div className="row justify-content-center align-content-center h-100">
+                <div className="col-12 col-md-8 col-xxl-6">
+                  <div className="card shadow-sm">
+                    <div className="card-body row p-5">
+                      <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                         <img
-                          src='/signup.png'
-                          className='img-fluid'
-                          alt='Войти'
+                          src="/signup.png"
+                          className="img-fluid"
+                          alt="Войти"
                         />
                       </div>
-                      <div className='col-12 col-md-6 mt-3 mt-mb-0'>
+                      <div className="col-12 col-md-6 mt-3 mt-mb-0">
                         <Formik
                           initialValues={initialValues}
                           validationSchema={validationSchema}
@@ -90,85 +90,85 @@ const SignUp = () => {
                         >
                           {({ isSubmitting, errors, touched, status }) => (
                             <Form>
-                              <h1 className='text-center mb-4'>
+                              <h1 className="text-center mb-4">
                                 {t('interface.signUp')}
                               </h1>
-                              <div className='form-floating mb-3'>
+                              <div className="form-floating mb-3">
                                 <Field
-                                  type='text'
-                                  name='username'
+                                  type="text"
+                                  name="username"
                                   id={usernameId}
                                   className={`form-control ${
                                     errors.username && touched.username
-                                      ? 'is-invalid'
-                                      : ''
+                                      ? "is-invalid"
+                                      : ""
                                   }`}
-                                  placeholder='Username'
+                                  placeholder="Username"
                                   autoFocus
                                 />
                                 <label htmlFor={usernameId}>
                                   {t('interface.newUser')}
                                 </label>
                                 <div
-                                  placement='right'
-                                  className='invalid-tooltip'
+                                  placement="right"
+                                  className="invalid-tooltip"
                                 >
                                   {errors.username}
                                 </div>
                               </div>
-                              <div className='form-floating mb-3'>
+                              <div className="form-floating mb-3">
                                 <Field
-                                  type='password'
-                                  name='password'
+                                  type="password"
+                                  name="password"
                                   id={passwordId}
                                   className={`form-control ${
                                     errors.password && touched.password
-                                      ? 'is-invalid'
-                                      : ''
+                                      ? "is-invalid"
+                                      : ""
                                   }`}
-                                  placeholder='Password'
+                                  placeholder="Password"
                                 />
                                 <label htmlFor={passwordId}>
                                   {t('interface.password')}
                                 </label>
                                 <div
-                                  placement='right'
-                                  className='invalid-tooltip'
+                                  placement="right"
+                                  className="invalid-tooltip"
                                 >
                                   {errors.password}
                                 </div>
                               </div>
-                              <div className='form-floating mb-4'>
+                              <div className="form-floating mb-4">
                                 <Field
-                                  type='password'
-                                  name='repeatPassword'
+                                  type="password"
+                                  name="repeatPassword"
                                   id={repeatPasswordId}
                                   className={`form-control ${
                                     errors.repeatPassword &&
                                     touched.repeatPassword
-                                      ? 'is-invalid'
-                                      : ''
+                                      ? "is-invalid"
+                                      : ""
                                   }`}
-                                  placeholder='Password'
+                                  placeholder="Password"
                                 />
                                 <label htmlFor={repeatPasswordId}>
                                   {t('interface.repeatPassword')}
                                 </label>
                                 <div
-                                  placement='right'
-                                  className='invalid-tooltip'
+                                  placement="right"
+                                  className="invalid-tooltip"
                                 >
                                   {errors.repeatPassword}
                                 </div>
                                 {status && status.error && (
-                                  <div className='alert alert-danger mt-2'>
+                                  <div className="alert alert-danger mt-2">
                                     {status.error}
                                   </div>
                                 )}
                               </div>
                               <button
-                                type='submit'
-                                className='w-100 mb-3 btn btn-outline-primary'
+                                type="submit"
+                                className="w-100 mb-3 btn btn-outline-primary"
                                 disabled={isSubmitting}
                               >
                                 {t('interface.signUpButton')}
@@ -183,7 +183,7 @@ const SignUp = () => {
               </div>
             </div>
           </div>
-          <div className='Toastify'></div>
+          <div className="Toastify"></div>
         </div>
       </div>
     </div>
