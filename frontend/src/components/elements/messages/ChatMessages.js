@@ -9,8 +9,7 @@ const СhatMessages = ({ activeChannel }) => {
   const channels = useSelector((state) => state.chat.channels);
 
   const getMessagesByChannel = (messagesByChannel, channel) =>
-    messagesByChannel
-      .filter((msg) => msg.channelId === channel);
+    messagesByChannel.filter((msg) => msg.channelId === channel);
 
   const findChannelNameById = (allChannels, id) => {
     const channelById = allChannels.find((c) => c.id === id);

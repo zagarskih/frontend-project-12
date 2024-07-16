@@ -55,22 +55,15 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
           {channels.map((channel) => (
             <li
               className="nav-item w-100"
-              onClick={() => onChannelClick(channel.id)}
-              onKeyPress={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  onChannelClick(channel.id);
-                }
-              }}
-              tabIndex={0}
-              role="button"
               key={channel.id}
             >
-              <div role="group" className="d-flex show dropdown btn-group">
+              <div className="d-flex show dropdown btn-group">
                 <button
                   name={channel.name}
                   aria-label={channel.name}
                   type="button"
                   id={channelId}
+                  onClick={() => onChannelClick(channel.id)}
                   className={classNames(
                     'w-100',
                     'rounded-0',
