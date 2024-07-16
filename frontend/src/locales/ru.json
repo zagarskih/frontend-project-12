@@ -53,7 +53,9 @@
     "errorPageBody": "Но вы можете перейти на",
     "errorPageLink": "главную страницу",
     "addChannelButton": "+",
-    "channelName": "Имя канала"
+    "channelName": "Имя канала",
+    "writeNewMessage": "Новое сообщение",
+    "writeMessagePlaceholder": "Введите сообщение..."
   },
   "toast": {
     "addChannel": "Канал создан",
