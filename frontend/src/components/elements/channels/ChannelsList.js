@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useId } from "react";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import classNames from "classnames";
@@ -7,7 +7,7 @@ import DropDownMenu from "./DropDownMenu";
 
 const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
   const { t } = useTranslation();
-
+  const channelId = useId();
   const channels = useSelector((state) => state.chat.channels);
 
   const [showAddModal, setShowAddModal] = useState(false);
@@ -63,16 +63,16 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
                   name={channel.name}
                   aria-label={channel.name}
                   type="button"
+                  id={channelId}
                   className={classNames(
                     "w-100",
-                    "rounded-0 ",
+                    "rounded-0",
                     "text-start",
-                    { "text-truncate": channel.removable === true },
+                    {"text-truncate": channel.removable === true},
                     "btn",
-                    { "btn-secondary": channel.id === activeChannel }
+                    {"btn-secondary": channel.id === activeChannel}
                   )}
                 >
-                  <span className="visually-hidden">Имя канала</span>
                   <span className="me-1">#</span>
                   {channel.name}
                 </button>

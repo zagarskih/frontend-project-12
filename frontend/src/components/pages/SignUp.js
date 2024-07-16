@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useId } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import ChatHeader from "../elements/HeaderChat";
@@ -12,6 +12,10 @@ const SignUp = () => {
   const { t } = useTranslation();
   const { logIn } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const usernameId = useId();
+  const passwordId = useId();
+  const repeatPasswordId = useId();
 
   const handleSubmit = async (values, { setSubmitting, setStatus }) => {
     try {
@@ -93,6 +97,7 @@ const SignUp = () => {
                                 <Field
                                   type="text"
                                   name="username"
+                                  id={usernameId}
                                   className={`form-control ${
                                     errors.username && touched.username
                                       ? "is-invalid"
@@ -101,7 +106,7 @@ const SignUp = () => {
                                   placeholder="Username"
                                   autoFocus
                                 />
-                                <label htmlFor="username">
+                                <label htmlFor={usernameId}>
                                   {t("interface.newUser")}
                                 </label>
                                 <div
@@ -115,6 +120,7 @@ const SignUp = () => {
                                 <Field
                                   type="password"
                                   name="password"
+                                  id={passwordId}
                                   className={`form-control ${
                                     errors.password && touched.password
                                       ? "is-invalid"
@@ -122,7 +128,7 @@ const SignUp = () => {
                                   }`}
                                   placeholder="Password"
                                 />
-                                <label htmlFor="password">
+                                <label htmlFor={passwordId}>
                                   {t("interface.password")}
                                 </label>
                                 <div
@@ -136,6 +142,7 @@ const SignUp = () => {
                                 <Field
                                   type="password"
                                   name="repeatPassword"
+                                  id={repeatPasswordId}
                                   className={`form-control ${
                                     errors.repeatPassword &&
                                     touched.repeatPassword
@@ -144,7 +151,7 @@ const SignUp = () => {
                                   }`}
                                   placeholder="Password"
                                 />
-                                <label htmlFor="password">
+                                <label htmlFor={repeatPasswordId}>
                                   {t("interface.repeatPassword")}
                                 </label>
                                 <div

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useId } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { logInApi } from "../../api";
@@ -12,6 +12,9 @@ const Login = () => {
   const { t } = useTranslation();
   const { logIn } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const usernameId = useId();
+  const passwordId = useId();
 
   const handleSubmit = async (values, { setSubmitting, setStatus }) => {
     try {
@@ -82,6 +85,7 @@ const Login = () => {
                                 <Field
                                   type="text"
                                   name="username"
+                                  id={usernameId}
                                   className={`form-control ${
                                     errors.username && touched.username
                                       ? "is-invalid"
@@ -90,7 +94,7 @@ const Login = () => {
                                   placeholder="Username"
                                   autoFocus
                                 />
-                                <label htmlFor="username">
+                                <label htmlFor={usernameId}>
                                   {t("interface.nickname")}
                                 </label>
                               </div>
@@ -98,6 +102,7 @@ const Login = () => {
                                 <Field
                                   type="password"
                                   name="password"
+                                  id={passwordId}
                                   className={`form-control ${
                                     errors.password && touched.password
                                       ? "is-invalid"
@@ -105,7 +110,7 @@ const Login = () => {
                                   }`}
                                   placeholder="Password"
                                 />
-                                <label htmlFor="password">
+                                <label htmlFor={passwordId}>
                                   {t("interface.password")}
                                 </label>
                                 {status && status.error && (

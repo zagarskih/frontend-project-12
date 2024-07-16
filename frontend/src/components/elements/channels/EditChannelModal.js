@@ -89,24 +89,33 @@ const EditChannelModal = ({ show, handleClose, channelId }) => {
         >
           {({ values, errors, handleChange, handleBlur, isSubmitting }) => (
             <Form>
-              <Field
-                type="text"
-                id="inputField"
-                name="inputField"
-                innerRef={inputRef}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.inputField}
-                autoFocus
-                className={`form-control ${
-                  errors.inputField ? "is-invalid" : ""
-                }`}
-              />
-              <ErrorMessage
-                name="inputField"
-                component="div"
-                className="invalid-feedback"
-              />
+              <div>
+                <label
+                  className="form-label visually-hidden"
+                  htmlFor="inputEditChannel"
+                >
+                  {t("interface.channelName")}
+                </label>
+                <Field
+                  type="text"
+                  id="inputEditChannel"
+                  name="inputField"
+                  placeholder=""
+                  innerRef={inputRef}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.inputField}
+                  autoFocus
+                  className={`form-control ${
+                    errors.inputField ? "is-invalid" : ""
+                  }`}
+                />
+                <ErrorMessage
+                  name="inputField"
+                  component="div"
+                  className="invalid-feedback"
+                />
+              </div>
               <div className="d-flex justify-content-end">
                 <Button
                   variant="secondary"
@@ -121,7 +130,7 @@ const EditChannelModal = ({ show, handleClose, channelId }) => {
                   disabled={isSubmitting}
                   className="mt-3 ms-2"
                 >
-                  {t("interface.edit")}
+                  {t("interface.send")}
                 </Button>
               </div>
             </Form>

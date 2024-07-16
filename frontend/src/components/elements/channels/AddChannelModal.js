@@ -77,23 +77,32 @@ const AddChannelModal = ({ show, handleClose, setActiveChannel }) => {
         >
           {({ values, errors, handleChange, handleBlur, isSubmitting }) => (
             <Form>
-              <Field
-                type="text"
-                id="inputField"
-                name="inputField"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.inputField}
-                autoFocus
-                className={`form-control ${
-                  errors.inputField ? "is-invalid" : ""
-                }`}
-              />
-              <ErrorMessage
-                name="inputField"
-                component="div"
-                className="invalid-feedback"
-              />
+              <div>
+                <label
+                  className="form-label visually-hidden"
+                  htmlFor="inputAddChannel"
+                >
+                  {t("interface.channelName")}
+                </label>
+                <Field
+                  type="text"
+                  id="inputAddChannel"
+                  name="inputField"
+                  placeholder=""
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.inputField}
+                  autoFocus
+                  className={`form-control ${
+                    errors.inputField ? "is-invalid" : ""
+                  }`}
+                />
+                <ErrorMessage
+                  name="inputField"
+                  component="div"
+                  className="invalid-feedback"
+                />
+              </div>
               <div className="d-flex justify-content-end">
                 <Button
                   variant="secondary"
