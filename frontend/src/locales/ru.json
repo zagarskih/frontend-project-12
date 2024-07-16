@@ -23,7 +23,7 @@
   "validation": {
     "notFilled": "Обязательное поле",
     "wrongLength": "От 3 до 20 символов",
-    "notUnique": "Имя уже существует",
+    "notUnique": "Должно быть уникальным",
     "passwordLength": "Не менее 6 символов",
     "notSamePassword": "Пароли должны совпадать"
   },
@@ -52,11 +52,12 @@
     "notFound": "Страница не найдена",
     "errorPageBody": "Но вы можете перейти на",
     "errorPageLink": "главную страницу",
-    "addChannelButton": "+"
+    "addChannelButton": "+",
+    "channelName": "Имя канала"
   },
   "toast": {
     "addChannel": "Канал создан",
-    "deleteChannel": "Канал удален",
+    "deleteChannel": "Канал удалён",
     "editChannel": "Канал переименован"
   },
   "message_one": "{{count}} сообщение",
