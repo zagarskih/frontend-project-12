@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import store from './store';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import initI18next from './initi18next';
 import initLeoprofanity from './initLeoProf.js';
