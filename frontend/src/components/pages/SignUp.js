@@ -1,12 +1,12 @@
 import React, { useContext, useId } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
-import ChatHeader from '../elements/HeaderChat';
 import * as yup from 'yup';
-import { sighUpApi } from '../../api';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import AuthContext from '../../tokenContext';
+import ChatHeader from '../elements/HeaderChat';
+import { sighUpApi } from '../../api';
 
 const SignUp = () => {
   const { t } = useTranslation();
@@ -20,11 +20,10 @@ const SignUp = () => {
   const handleSubmit = async (values, { setSubmitting, setStatus }) => {
     try {
       setSubmitting(true);
-      const username = values.username;
-      const password = values.password;
+      const { username, password } = values;
       const response = await sighUpApi(username, password, t);
       logIn(response);
-      const token = response.token;
+      const { token } = response;
       localStorage.setItem('token', token);
       navigate('/');
     } catch (error) {
@@ -88,7 +87,12 @@ const SignUp = () => {
                           validateOnBlur={false}
                           onSubmit={handleSubmit}
                         >
-                          {({ isSubmitting, errors, touched, status }) => (
+                          {({
+                            isSubmitting,
+                            errors,
+                            touched,
+                            status
+                          }) => (
                             <Form>
                               <h1 className="text-center mb-4">
                                 {t('interface.signUp')}
@@ -100,8 +104,8 @@ const SignUp = () => {
                                   id={usernameId}
                                   className={`form-control ${
                                     errors.username && touched.username
-                                      ? "is-invalid"
-                                      : ""
+                                      ? 'is-invalid'
+                                      : ''
                                   }`}
                                   placeholder="Username"
                                   autoFocus
@@ -110,7 +114,7 @@ const SignUp = () => {
                                   {t('interface.newUser')}
                                 </label>
                                 <div
-                                  placement="right"
+                                  // placement="right"
                                   className="invalid-tooltip"
                                 >
                                   {errors.username}
@@ -123,8 +127,8 @@ const SignUp = () => {
                                   id={passwordId}
                                   className={`form-control ${
                                     errors.password && touched.password
-                                      ? "is-invalid"
-                                      : ""
+                                      ? 'is-invalid'
+                                      : ''
                                   }`}
                                   placeholder="Password"
                                 />
@@ -132,7 +136,7 @@ const SignUp = () => {
                                   {t('interface.password')}
                                 </label>
                                 <div
-                                  placement="right"
+                                  // placement="right"
                                   className="invalid-tooltip"
                                 >
                                   {errors.password}
@@ -146,8 +150,8 @@ const SignUp = () => {
                                   className={`form-control ${
                                     errors.repeatPassword &&
                                     touched.repeatPassword
-                                      ? "is-invalid"
-                                      : ""
+                                      ? 'is-invalid'
+                                      : ''
                                   }`}
                                   placeholder="Password"
                                 />

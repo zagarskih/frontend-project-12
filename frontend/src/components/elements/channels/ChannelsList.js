@@ -56,6 +56,8 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
             <li
               className="nav-item w-100"
               onClick={() => onChannelClick(channel.id)}
+              tabIndex={0}
+              role="button"
               key={channel.id}
             >
               <div role="group" className="d-flex show dropdown btn-group">
@@ -65,12 +67,12 @@ const ChannelsList = ({ activeChannel, setActiveChannel, onChannelClick }) => {
                   type="button"
                   id={channelId}
                   className={classNames(
-                    "w-100",
-                    "rounded-0",
-                    "text-start",
-                    { "text-truncate": channel.removable === true },
-                    "btn",
-                    { "btn-secondary": channel.id === activeChannel },
+                    'w-100',
+                    'rounded-0',
+                    'text-start',
+                    { 'text-truncate': channel.removable === true },
+                    'btn',
+                    { 'btn-secondary': channel.id === activeChannel },
                   )}
                 >
                   <span className="me-1">#</span>

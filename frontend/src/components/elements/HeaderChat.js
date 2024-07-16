@@ -10,7 +10,7 @@ const ChatHeader = () => {
 
   const handleLogout = () => {
     logOut();
-    navigate("/login");
+    navigate('/login');
   };
 
   return (

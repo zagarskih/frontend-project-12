@@ -46,8 +46,8 @@ const chatSlice = createSlice({
       const updatedChannels = state.channels.filter((channel) => channel.id !== id);
       return {
         ...state,
-        channels: updatedChannels
-    };
+        channels: updatedChannels,
+      };
     },
     editChannel: (state, action) => {
       const { id, name } = action.payload;
@@ -56,7 +56,7 @@ const chatSlice = createSlice({
       );
       const updatedChannel = {
         ...state.channels[channelIndex],
-        name: name,
+        name,
       };
       const updatedChannels = [
         ...state.channels.slice(0, channelIndex),
@@ -71,31 +71,30 @@ const chatSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchChatData.pending, (state) => {
-        return {
-          ...state,
-          loading: true,
-          error: null,
-        };
-      })
-      .addCase(fetchChatData.fulfilled, (state, action) => {
-        return {
-          ...state,
-          channels: action.payload.channels,
-          messages: action.payload.messages,
-          loading: false,
-          error: null,
-        };
-      })
-      .addCase(fetchChatData.rejected, (state, action) => {
-        return {
-          ...state,
-          loading: false,
-          error: action.error.message,
-        };
-      });
+      .addCase(fetchChatData.pending, (state) => ({
+        ...state,
+        loading: true,
+        error: null,
+      }))
+      .addCase(fetchChatData.fulfilled, (state, action) => ({
+        ...state,
+        channels: action.payload.channels,
+        messages: action.payload.messages,
+        loading: false,
+        error: null,
+      }))
+      .addCase(fetchChatData.rejected, (state, action) => ({
+        ...state,
+        loading: false,
+        error: action.error.message,
+      }));
   },
 });
 
-export const { addMessage, addChannel, deleteChannel, editChannel } = chatSlice.actions;
+export const {
+  addMessage,
+  addChannel,
+  deleteChannel,
+  editChannel
+} = chatSlice.actions;
 export default chatSlice.reducer;

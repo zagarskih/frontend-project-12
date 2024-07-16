@@ -2,7 +2,7 @@ import { useRouteError } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import ChatHeader from '../elements/HeaderChat';
 
-export default function ErrorPage() {
+const ErrorPage = () => {
   const { t } = useTranslation();
   const error = useRouteError();
   console.error(error);
@@ -22,7 +22,8 @@ export default function ErrorPage() {
             <div className="col-md-4">
               <h1>{t('interface.notFound')}</h1>
               <p className="text-left">
-                {t('interface.errorPageBody')}{' '}
+                {t('interface.errorPageBody')}
+                {' '}
                 <a href="/login">{t('interface.errorPageLink')}</a>
               </p>
             </div>
@@ -32,3 +33,5 @@ export default function ErrorPage() {
     </div>
   );
 }
+
+export default ErrorPage;

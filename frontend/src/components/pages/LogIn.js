@@ -1,12 +1,12 @@
 import React, { useContext, useId } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
-import { logInApi } from '../../api';
-import ChatHeader from '../elements/HeaderChat';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import AuthContext from '../../tokenContext';
+import { logInApi } from '../../api';
+import ChatHeader from '../elements/HeaderChat';
 
 const Login = () => {
   const { t } = useTranslation();
@@ -19,11 +19,10 @@ const Login = () => {
   const handleSubmit = async (values, { setSubmitting, setStatus }) => {
     try {
       setSubmitting(true);
-      const username = values.username;
-      const password = values.password;
+      const { username, password } = values;
       const response = await logInApi(username, password, t);
       logIn(response);
-      const token = response.token;
+      const { token } = response;
       localStorage.setItem('token', token);
       navigate('/');
     } catch (error) {
@@ -76,7 +75,12 @@ const Login = () => {
                           validateOnChange={false}
                           validateOnBlur={false}
                         >
-                          {({ isSubmitting, errors, touched, status }) => (
+                          {({
+                            isSubmitting,
+                            errors,
+                            touched,
+                            status,
+                          }) => (
                             <Form>
                               <h1 className="text-center mb-4">
                                 {t('interface.signIn')}
@@ -88,8 +92,8 @@ const Login = () => {
                                   id={usernameId}
                                   className={`form-control ${
                                     errors.username && touched.username
-                                      ? "is-invalid"
-                                      : ""
+                                      ? 'is-invalid'
+                                      : ''
                                   }`}
                                   placeholder="Username"
                                   autoFocus
@@ -118,7 +122,6 @@ const Login = () => {
                                     {status.error}
                                   </div>
                                 )}
-                                {/* {(errors.username || errors.password) && (<div className="alert alert-danger">Пожалуйста, введите логин и пароль</div>)} */}
                               </div>
                               <button
                                 type="submit"
@@ -134,7 +137,9 @@ const Login = () => {
                     </div>
                     <div className="card-footer p-4">
                       <div className="text-center">
-                        <span>{t('interface.noAcc')} </span>
+                        <span>
+                          {t('interface.noAcc')}
+                          </span>
                         <a href="/signup">{t('interface.signUp')}</a>
                       </div>
                     </div>

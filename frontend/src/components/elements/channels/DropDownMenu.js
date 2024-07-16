@@ -50,9 +50,11 @@ const DropDownMenu = ({
   const handleButtonClick = (event) => {
     event.stopPropagation();
     if (openMenuChannelId) {
-      channel.id === openMenuChannelId
-        ? handleCloseMenu()
-        : handleShowMenu(channel.id);
+      if (channel.id === openMenuChannelId) {
+        handleCloseMenu();
+      } else {
+        handleShowMenu(channel.id);
+      }
     } else {
       handleShowMenu(channel.id);
     }
@@ -61,7 +63,7 @@ const DropDownMenu = ({
   useEffect(() => {
     if (showMenu && openMenuChannelId === channel.id) {
       createPopper(buttonRef.current, menuRef.current, {
-        placement: "bottom-start",
+        placement: 'bottom-start',
       });
     }
   }, [showMenu, openMenuChannelId, channel.id]);
@@ -74,13 +76,13 @@ const DropDownMenu = ({
         type="button"
         aria-expanded={showMenu && openMenuChannelId === channel.id}
         className={classNames(
-          "flex-grow-0",
-          "dropdown-toggle",
-          "dropdown-toggle-split",
-          "btn",
-          { "btn-secondary": channel.id === activeChannel },
+          'flex-grow-0',
+          'dropdown-toggle',
+          'dropdown-toggle-split',
+          'btn',
+          { 'btn-secondary': channel.id === activeChannel },
           {
-            "btn-outline-secondary":
+            'btn-outline-secondary':
               showMenu && openMenuChannelId === channel.id,
           },
         )}
@@ -122,8 +124,8 @@ const DropDownMenu = ({
           data-rr-ui-dropdown-item
           role="button"
           className="dropdown-item"
-          // tab-index='0'
-          href='#'
+          tabIndex={0}
+          href="0"
         >
           {t('interface.edit')}
         </a>

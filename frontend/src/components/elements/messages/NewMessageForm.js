@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
-import { sendMessageApi } from '../../../api';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
-import AuthContext from '../../../tokenContext';
 import filter from 'leo-profanity';
 import { io } from 'socket.io-client';
+import { sendMessageApi } from '../../../api';
+import AuthContext from '../../../tokenContext';
 
 const socket = io();
 
@@ -48,25 +48,26 @@ const NewMessageForm = ({ activeChannel }) => {
   };
 
   return (
-    <div className='mt-auto px-5 py-3'>
+    <div className="mt-auto px-5 py-3">
       <form
         noValidate
-        className='py-1 border rounded-2'
+        className="py-1 border rounded-2"
         onSubmit={handleSendMessage}
       >
-        <div className='input-group'>
+        <div className="input-group">
           <input
-            name='body'
-            aria-label='Новое сообщение'
-            placeholder='Введите сообщение...'
-            className='border-0 p-0 ps-2 form-control'
+            name="body"
+            aria-label={t('interface.writeNewMessage')}
+            placeholder={t('interface.writeMessagePlaceholder')}
+            className="border-0 p-0 ps-2 form-control"
             value={newMessage}
             onChange={handleInputChange}
-          ></input>
+          >
+          </input>
           <button
-            type='submit'
+            type="submit"
             disabled={isSubmiting}
-            className='btn btn-group-vertical'
+            className="btn btn-group-vertical"
           >
             {t('interface.send')}
           </button>

@@ -9,7 +9,7 @@ import {
 
 const { dispatch } = store;
 
-export const initSocket = () => {
+export default initSocket = () => {
   const socket = io();
 
   socket.on('newMessage', (newMessage) => {
@@ -26,7 +26,7 @@ export const initSocket = () => {
 
   socket.on('editChannel', (payload) => {
     dispatch(
-      editChannel({ channelId: payload.channelId, newName: payload.newName })
+      editChannel({ channelId: payload.channelId, newName: payload.newName, })
     );
   });
 

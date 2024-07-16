@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ChannelsList from '../elements/channels/ChannelsList';
 import ChatMessages from '../elements/messages/ChatMessages';
@@ -12,7 +12,7 @@ const ChatPage = () => {
   const loading = useSelector((state) => state.chat.loading);
   const error = useSelector((state) => state.chat.error);
 
-  const [activeChannel, setActiveChannel] = useState("1");
+  const [activeChannel, setActiveChannel] = useState('1');
 
   const handleActiveChannel = (channel) => {
     setActiveChannel(channel);
@@ -29,7 +29,10 @@ const ChatPage = () => {
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div>
+      Error:
+      {error}
+    </div>;
   }
 
   return (

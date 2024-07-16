@@ -50,7 +50,7 @@ const AuthProvider = ({ children }) => {
       logOut,
       user,
     }),
-    [logIn, logOut, user]
+    [logIn, logOut, user],
   );
 
   return (
@@ -62,7 +62,7 @@ const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('token');
   console.log(!!token);
   const location = useLocation();
-  return token ? ( //delete !!
+  return token ? (
     children
   ) : (
     <Navigate to="/login" state={{ from: location }} />

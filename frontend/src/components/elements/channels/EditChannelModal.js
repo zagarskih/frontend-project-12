@@ -5,14 +5,14 @@ import {
   Formik,
   Form,
   Field,
-  ErrorMessage
+  ErrorMessage,
 } from 'formik';
 import * as yup from 'yup';
-import { editChannelApi } from '../../../api';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { io } from 'socket.io-client';
 import filter from 'leo-profanity';
+import { editChannelApi } from '../../../api';
 
 const socket = io();
 
@@ -50,7 +50,7 @@ const EditChannelModal = ({ show, handleClose, channelId }) => {
       await editChannelApi(token, newName, channelId, t);
 
       const valuesForSocket = { id: channelId, name: newName };
-      socket.emit("renameChannel", valuesForSocket);
+      socket.emit('renameChannel', valuesForSocket);
 
       toast.success(t('toast.editChannel'));
       resetForm();
@@ -92,7 +92,13 @@ const EditChannelModal = ({ show, handleClose, channelId }) => {
           validateOnChange={false}
           validateOnBlur={false}
         >
-          {({ values, errors, handleChange, handleBlur, isSubmitting }) => (
+          {({
+            values,
+            errors,
+            handleChange,
+            handleBlur,
+            isSubmitting,
+          }) => (
             <Form>
               <div>
                 <label
@@ -112,7 +118,7 @@ const EditChannelModal = ({ show, handleClose, channelId }) => {
                   value={values.inputField}
                   autoFocus
                   className={`form-control ${
-                    errors.inputField ? "is-invalid" : ""
+                    errors.inputField ? 'is-invalid' : ''
                   }`}
                 />
                 <ErrorMessage

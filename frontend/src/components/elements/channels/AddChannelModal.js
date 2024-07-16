@@ -80,7 +80,13 @@ const AddChannelModal = ({ show, handleClose, setActiveChannel }) => {
           validateOnChange={false}
           validateOnBlur={false}
         >
-          {({ values, errors, handleChange, handleBlur, isSubmitting }) => (
+          {({
+            values,
+            errors,
+            handleChange,
+            handleBlur,
+            isSubmitting
+          }) => (
             <Form>
               <div>
                 <label
@@ -99,7 +105,7 @@ const AddChannelModal = ({ show, handleClose, setActiveChannel }) => {
                   value={values.inputField}
                   autoFocus
                   className={`form-control ${
-                    errors.inputField ? "is-invalid" : ""
+                    errors.inputField ? 'is-invalid' : ''
                   }`}
                 />
                 <ErrorMessage
