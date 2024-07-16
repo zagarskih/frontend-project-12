@@ -8,15 +8,14 @@ const СhatMessages = ({ activeChannel }) => {
   const messages = useSelector((state) => state.chat.messages);
   const channels = useSelector((state) => state.chat.channels);
 
-  const getMessagesByChannel = (messagesByChannel, channel) =>
-    messagesByChannel.filter((msg) => msg.channelId === channel);
+  const getMsgsByChannel = (msgsByChannel, channel) => msgsByChannel.filter((msg) => msg.channelId === channel);
 
   const findChannelNameById = (allChannels, id) => {
     const channelById = allChannels.find((c) => c.id === id);
     return channelById ? channelById.name : 'Channel not found';
   };
 
-  const activeChannelMessages = getMessagesByChannel(messages, activeChannel);
+  const activeChannelMessages = getMsgsByChannel(messages, activeChannel);
   const activeChannelName = findChannelNameById(channels, activeChannel);
 
   return (
